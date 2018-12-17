@@ -25,7 +25,7 @@ const auth = new ApolloLink((operation, next) => {
 });
 
 const http = new HttpLink({
-  uri: "http://localhost:4000/graphql"
+  uri: "http://localhost:3000/"
 });
 
 const state = withClientState({
@@ -36,7 +36,7 @@ const state = withClientState({
 
 const client = new ApolloClient({
   cache,
-  link: ApolloLink.from([auth, state, http])
+  link: ApolloLink.from([state, auth, http])
 });
 
 export default client;
