@@ -25,7 +25,7 @@ const auth = new ApolloLink((operation, next) => {
 });
 
 const http = new HttpLink({
-  uri: "http://localhost:3000/"
+  uri: "http://localhost:4000/"
 });
 
 const state = withClientState({
