@@ -3,6 +3,7 @@ import { InMemoryCache } from "apollo-cache-inmemory";
 import { withClientState } from "apollo-link-state";
 import { ApolloLink } from "apollo-link";
 import { HttpLink } from "apollo-boost";
+// import { WebSocketLink } from "apollo-link-ws";
 
 const cache = new InMemoryCache();
 
@@ -25,8 +26,18 @@ const auth = new ApolloLink((operation, next) => {
 });
 
 const http = new HttpLink({
-  uri: "http://localhost:4000/"
+  uri: "http://localhost:4000/graphql"
 });
+
+// const wsLink = new WebSocketLink({
+//   options: {
+//     connectionParams: {
+//       "X-JWT": getToken()
+//     },
+//     reconnect: true
+//   },
+//   uri: "http://localhost:4000/graphql"
+// });
 
 const state = withClientState({
   cache
