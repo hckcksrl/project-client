@@ -1,8 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { EmailLogin } from "./queries";
-import { Mutation, MutationFn } from "react-apollo";
-import bcrypt from "bcryptjs";
+import { Mutation } from "react-apollo";
 
 const Input = styled.input`
   padding: 1em;
