@@ -1,3 +1,3 @@
 # project-client
 
-## React , Apollo , Graphql
+## React , Apollo Client
