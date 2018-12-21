@@ -40,9 +40,43 @@ const http = new HttpLink({
 // });
 
 const state = withClientState({
-  cache
-  //   defaults,
-  //   resolvers
+  cache,
+  defaults: {
+    auth: {
+      __typename: "AuthToken",
+      isLoggedIn: Boolean(localStorage.getItem("jwt"))
+    }
+  },
+  resolvers: {
+    Mutation: {
+      UserLogin: (_, { token }, { cache }) => {
+        localStorage.setItem("token", token);
+        cache.writeData({
+          data: {
+            isAuth: {
+              __typename: "AuthToken",
+              Logined: true
+            }
+          }
+        });
+        console.log(cache);
+        return null;
+      },
+      UserLogout: (_, __, { cache }) => {
+        localStorage.removeItem("token");
+        cache.writeData({
+          data: {
+            isAuth: {
+              __typename: "AuthToken",
+              Logined: false
+            }
+          }
+        });
+        console.log("logout");
+        return null;
+      }
+    }
+  }
 });
 
 const client = new ApolloClient({
