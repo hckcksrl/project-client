@@ -83,6 +83,7 @@ export default class Regist extends React.Component {
               onChange={this._onInputChange}
               value={password}
               name={"password"}
+              minLength={5}
             />
             <Button type="submit">Regist</Button>
           </Form>
