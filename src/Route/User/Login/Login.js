@@ -52,7 +52,7 @@ export default class Login extends React.Component {
           const { Login } = data;
           if (Login.result) {
             localStorage.setItem("token", Login.token);
-            history.push("/");
+            history.push("/project");
           } else {
             console.log(Login.error);
           }
@@ -83,6 +83,7 @@ export default class Login extends React.Component {
               onChange={this._onInputChange}
               value={password}
               name={"password"}
+              //   minLength={5}
             />
             <Button type="submit">Login</Button>
           </Form>
