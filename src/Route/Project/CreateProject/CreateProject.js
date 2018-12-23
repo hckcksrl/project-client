@@ -2,8 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import { Mutation } from "react-apollo";
 import { CreateProject } from "./queries";
-import { GetUser } from "../../../LocalQueries";
-import { graphql } from "graphql";
+// import { GetUser } from "../../../LocalQueries";
+// import { graphql } from "graphql";
 
 const Project = styled.input`
   padding: 1em;
@@ -30,8 +30,8 @@ class CreateProjects extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      projectname: "",
-      user: GetUser
+      projectname: ""
+      // user: GetUser
     };
   }
 
@@ -39,29 +39,39 @@ class CreateProjects extends React.Component {
     const { history } = this.props;
     const { projectname } = this.state;
     const userid = 1;
+
     return (
       <Mutation
         mutation={CreateProject}
         variables={{ projectname: projectname, userid: userid }}
-        onCompleted={data => {
-          console.log(data);
-          const { CreateProject } = data;
-          if (CreateProject.result) {
-            localStorage.setItem("token", CreateProject.token);
-            history.push("/");
-          } else {
-            console.log(CreateProject.error);
-          }
-        }}
+        // onCompleted={data => {
+        //   console.log(data);
+        //   const { CreateProject } = data;
+        //   if (CreateProject.result) {
+        //     history.push("/project");
+        //   } else {
+        //     console.log(CreateProject.error);
+        //   }
+        // }}
       >
         {Create_Project => (
           <Form
             onSubmit={e => {
               e.preventDefault();
+
               Create_Project({
                 variables: {
                   projectname: projectname,
                   userid: userid
+                }
+              }).then(data => {
+                console.log(data.data);
+                if (data.data.CreateProject.result) {
+                  this.state.projectname = "";
+                  history.push("/project");
+                  // console.log(this.projectname)
+                } else {
+                  console.log(data.CreateProject.error);
                 }
               });
             }}
