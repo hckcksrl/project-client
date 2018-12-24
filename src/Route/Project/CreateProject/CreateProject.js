@@ -31,29 +31,14 @@ class CreateProjects extends React.Component {
     super(props);
     this.state = {
       projectname: ""
-      // user: GetUser
     };
   }
 
   render() {
     const { history } = this.props;
     const { projectname } = this.state;
-    const userid = 1;
-
     return (
-      <Mutation
-        mutation={CreateProject}
-        variables={{ projectname: projectname, userid: userid }}
-        // onCompleted={data => {
-        //   console.log(data);
-        //   const { CreateProject } = data;
-        //   if (CreateProject.result) {
-        //     history.push("/project");
-        //   } else {
-        //     console.log(CreateProject.error);
-        //   }
-        // }}
-      >
+      <Mutation mutation={CreateProject}>
         {Create_Project => (
           <Form
             onSubmit={e => {
@@ -61,17 +46,15 @@ class CreateProjects extends React.Component {
 
               Create_Project({
                 variables: {
-                  projectname: projectname,
-                  userid: userid
+                  projectname: projectname
                 }
               }).then(data => {
                 console.log(data.data);
                 if (data.data.CreateProject.result) {
                   this.state.projectname = "";
                   history.push("/project");
-                  // console.log(this.projectname)
                 } else {
-                  console.log(data.CreateProject.error);
+                  console.log(data.data.CreateProject.error);
                 }
               });
             }}
