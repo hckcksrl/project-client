@@ -3,26 +3,28 @@ import { InMemoryCache } from "apollo-cache-inmemory";
 import { withClientState } from "apollo-link-state";
 import { ApolloLink } from "apollo-link";
 import { HttpLink } from "apollo-boost";
+// import { setContext } from "apollo-link-context";
 // import { WebSocketLink } from "apollo-link-ws";
 
 const cache = new InMemoryCache();
 
 const getToken = () => {
-  const token = localStorage.getItem("jwt");
+  const token = localStorage.getItem("token");
   if (token) {
     return token;
   } else {
     return null;
   }
 };
-
-const auth = new ApolloLink((operation, next) => {
-  operation.setContext({
-    header: {
-      "X-JWT": getToken()
+const authMiddleware = new ApolloLink((operation, forward) => {
+  operation.setContext(({ headers = {} }) => ({
+    headers: {
+      ...headers,
+      authorization: getToken()
     }
-  });
-  return next(operation);
+  }));
+
+  return forward(operation);
 });
 
 const http = new HttpLink({
@@ -44,7 +46,7 @@ const state = withClientState({
   defaults: {
     auth: {
       __typename: "AuthToken",
-      isLoggedIn: Boolean(localStorage.getItem("jwt"))
+      isLoggedIn: Boolean(localStorage.getItem("token"))
     }
   },
   resolvers: {
@@ -81,7 +83,7 @@ const state = withClientState({
 
 const client = new ApolloClient({
   cache,
-  link: ApolloLink.from([state, auth, http])
+  link: ApolloLink.from([state, authMiddleware, http])
 });
 
 export default client;
