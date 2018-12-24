@@ -1,4 +1,4 @@
-import { gql } from "apollo-boost";
+import gql from "graphql-tag";
 
 export const Login = gql`
   mutation Login($token: String!) {
@@ -13,11 +13,13 @@ export const Logout = gql`
 `;
 
 export const GetUser = gql`
-  query Get_User {
-    GetUser {
+  {
+    GetMy {
       result
       error
-      user
+      user {
+        id
+      }
     }
   }
 `;
