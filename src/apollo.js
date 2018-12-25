@@ -45,7 +45,7 @@ const state = withClientState({
   cache,
   defaults: {
     auth: {
-      __typename: "AuthToken",
+      __typename: "Auth",
       isLoggedIn: Boolean(localStorage.getItem("token"))
     }
   },
@@ -55,26 +55,26 @@ const state = withClientState({
         localStorage.setItem("token", token);
         cache.writeData({
           data: {
-            isAuth: {
-              __typename: "AuthToken",
-              Logined: true
+            auth: {
+              __typename: "Auth",
+              isLoggedIn: true
             }
           }
         });
-        console.log(cache);
+        console.log("login");
         return null;
       },
       UserLogout: (_, __, { cache }) => {
         localStorage.removeItem("token");
         cache.writeData({
           data: {
-            isAuth: {
-              __typename: "AuthToken",
-              Logined: false
+            auth: {
+              __typename: "Auth",
+              isLoggedIn: false
             }
           }
         });
-        console.log("logout");
+        console.log(cache.data);
         return null;
       }
     }
