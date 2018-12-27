@@ -50,9 +50,10 @@ export default class Login extends React.Component {
         onCompleted={data => {
           console.log(data);
           const { Login } = data;
+          console.log(Login);
           if (Login.result) {
             localStorage.setItem("token", Login.token);
-            history.push("/project");
+            history.push(`/list/${Login.id}`);
           } else {
             console.log(Login.error);
           }
