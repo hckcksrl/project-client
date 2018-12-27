@@ -30,7 +30,7 @@ export default class List extends React.Component {
     } = this.props;
     const uid = parseInt(userid);
     return (
-      <Query query={GetList} variables={{ id: 1 }}>
+      <Query query={GetList} variables={{ id: uid }}>
         {({ data, loading, error }) => {
           if (loading) return <h2>loading</h2>;
           if (error) return <h2>error</h2>;
@@ -42,19 +42,17 @@ export default class List extends React.Component {
               <div>
                 {project.map(data => {
                   return (
-                    <div>
-                      <h3 key={data.id}>projectname : {data.projectname}</h3>
+                    <div key={data.id}>
+                      <h2>projectname : {data.projectname}</h2>
                       <div>
                         {data.subproject.map(data => {
                           return (
-                            <div>
-                              <h4 key={data.id}>
-                                subprojectname : {data.subprojectname}
-                              </h4>
+                            <div key={data.id}>
+                              <h4>subprojectname : {data.subprojectname}</h4>
                               <div>
-                                {data.dataillist.map(data => {
+                                {data.detaillist.map(data => {
                                   return (
-                                    <div>
+                                    <div key={data.id}>
                                       <h6 key={data.id}>
                                         detailname :{data.detailname}
                                       </h6>
