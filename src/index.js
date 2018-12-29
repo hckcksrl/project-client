@@ -5,7 +5,6 @@ import { ApolloProvider } from "react-apollo";
 import client from "./apollo";
 
 document.body.style.background = "rgb(0, 121, 191)";
-
 ReactDOM.render(
   <ApolloProvider client={client}>
     <App />
