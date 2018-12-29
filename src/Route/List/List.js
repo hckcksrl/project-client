@@ -5,6 +5,10 @@ import styled from "styled-components";
 
 const Project = styled.div`
   display: flex;
+  position: absolute;
+`;
+const Scroll = styled.div`
+  position: relative;
 `;
 
 const Project_Main = styled.div`
@@ -13,7 +17,7 @@ const Project_Main = styled.div`
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  max-height: 100%;
+  height: 100%;
   position: relative;
   white-space: normal;
   margin-left: 8px;
@@ -32,8 +36,6 @@ const Project_Header = styled.div`
 const SubProject = styled.div`
   flex: 1 1 auto;
   margin-bottom: 0;
-  overflow-y: auto;
-  overflow-x: hidden;
   margin: 0 4px;
   padding: 0 4px;
   z-index: 1;
@@ -58,7 +60,6 @@ const SubProject_Name = styled.span`
   clear: both;
   display: block;
   margin: 0 0 4px;
-  overflow: hidden;
   text-decoration: none;
   word-wrap: break-word;
   color: #17394d;
@@ -74,12 +75,19 @@ const AddSub = styled.div`
   text-decoration: none;
 `;
 
+const AddSubInner = styled.div`
+  margin-left: 5px;
+`;
 const Main = styled.div``;
 
 const User = styled.div`
   display: flex;
-  justify-content: center;
-  padding: 1em;
+  justify-content: left;
+  align-items: center;
+  position: relative;
+  padding: 1.5em;
+
+  width: 100%;
 `;
 
 const UserEmail = styled.span`
@@ -87,11 +95,10 @@ const UserEmail = styled.span`
   font-size: 18px;
   font-weight: 700;
   line-height: 32px;
-  text-decoration: none;
+  position: fixed;
 `;
 
 const SubProject_Div = styled.div`
-  overflow: hidden;
   padding: 6px 8px 2px;
   position: relative;
   z-index: 10;
@@ -111,7 +118,6 @@ const AddProject = styled.div`
   margin-left: 8px;
   width: 272px;
 `;
-
 const Add = styled.span`
   padding: 6px 8px;
 `;
@@ -142,6 +148,7 @@ export default class List extends React.Component {
               <User>
                 <UserEmail key={result.id}>{result.email}</UserEmail>
               </User>
+              {/* <Scroll> */}
               <Project>
                 {project.map(data => {
                   return (
@@ -163,9 +170,9 @@ export default class List extends React.Component {
                         })}
                       </SubProject>
                       <AddSub>
-                        <div>
+                        <AddSubInner>
                           <span>Add SubProject</span>
-                        </div>
+                        </AddSubInner>
                       </AddSub>
                     </Project_Main>
                   );
@@ -174,6 +181,7 @@ export default class List extends React.Component {
                   <Add>Add Project</Add>
                 </AddProject>
               </Project>
+              {/* </Scroll> */}
             </Main>
           );
         }}
