@@ -2,4 +2,7 @@
 
 ## React , Apollo Client , Grpahql
 
-### Styled-Component List
+### Styled-Component
+
+(ex tello)
+
