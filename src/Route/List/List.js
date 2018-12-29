@@ -1,19 +1,120 @@
 import React from "react";
 import { Query } from "react-apollo";
 import { GetList } from "./queris";
-// import styled from "styled-components";
+import styled from "styled-components";
 
-// const Project = styled.div``;
+const Project = styled.div`
+  display: flex;
+`;
 
-// const Project_Header = styled.div``;
+const Project_Main = styled.div`
+  background-color: #dfe3e6;
+  border-radius: 3px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  max-height: 100%;
+  position: relative;
+  white-space: normal;
+  margin-left: 8px;
+  width: 272px;
+`;
+const Project_Name = styled.span`
+  font-size: 20px;
+`;
 
-// const SubProject = styled.div``;
+const Project_Header = styled.div`
+  flex: 0 0 auto;
+  padding: 10px;
+  position: relative;
+  min-height: 20px;
+`;
+const SubProject = styled.div`
+  flex: 1 1 auto;
+  margin-bottom: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin: 0 4px;
+  padding: 0 4px;
+  z-index: 1;
+  min-height: 0;
+`;
 
-// const AddSub = styled.div``;
+const SubProject_Main = styled.a`
+  background-color: #fff;
+  border-radius: 3px;
+  box-shadow: 0 1px 0 rgba(9, 45, 66, 0.25);
+  cursor: pointer;
+  display: block;
+  margin-bottom: 8px;
+  max-width: 300px;
+  min-height: 20px;
+  position: relative;
+  text-decoration: none;
+  z-index: 0;
+`;
 
-// const ProjectName = styled.textarea``;
+const SubProject_Name = styled.span`
+  clear: both;
+  display: block;
+  margin: 0 0 4px;
+  overflow: hidden;
+  text-decoration: none;
+  word-wrap: break-word;
+  color: #17394d;
+`;
 
-// const SubProjectName = styled.span``;
+const AddSub = styled.div`
+  border-radius: 0 0 3px 3px;
+  color: #6b808c;
+  display: block;
+  flex: 0 0 auto;
+  padding: 8px;
+  position: relative;
+  text-decoration: none;
+`;
+
+const Main = styled.div``;
+
+const User = styled.div`
+  display: flex;
+  justify-content: center;
+  padding: 1em;
+`;
+
+const UserEmail = styled.span`
+  color: white;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 32px;
+  text-decoration: none;
+`;
+
+const SubProject_Div = styled.div`
+  overflow: hidden;
+  padding: 6px 8px 2px;
+  position: relative;
+  z-index: 10;
+`;
+
+const AddProject = styled.div`
+  background-color: rgba(0, 0, 0, 0.12);
+  cursor: pointer;
+  color: #fff;
+  border-radius: 3px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  position: relative;
+  white-space: normal;
+  margin-left: 8px;
+  width: 272px;
+`;
+
+const Add = styled.span`
+  padding: 6px 8px;
+`;
 
 export default class List extends React.Component {
   constructor(props) {
@@ -37,61 +138,56 @@ export default class List extends React.Component {
           const result = data.GetUser.user;
           const project = result.project;
           return (
-            <div>
-              <h1 key={result.id}>email : {result.email}</h1>
-              <div>
+            <Main>
+              <User>
+                <UserEmail key={result.id}>{result.email}</UserEmail>
+              </User>
+              <Project>
                 {project.map(data => {
                   return (
-                    <div key={data.id}>
-                      <h2>projectname : {data.projectname}</h2>
-                      <div>
+                    <Project_Main key={data.id}>
+                      <Project_Header>
+                        <Project_Name>{data.projectname}</Project_Name>
+                      </Project_Header>
+                      <SubProject>
                         {data.subproject.map(data => {
                           return (
-                            <div key={data.id}>
-                              <h4>subprojectname : {data.subprojectname}</h4>
-                              <div>
-                                {data.detaillist.map(data => {
-                                  return (
-                                    <div key={data.id}>
-                                      <h6 key={data.id}>
-                                        detailname :{data.detailname}
-                                      </h6>
-                                    </div>
-                                  );
-                                })}
-                              </div>
-                            </div>
+                            <SubProject_Main key={data.id}>
+                              <SubProject_Div>
+                                <SubProject_Name>
+                                  {data.subprojectname}
+                                </SubProject_Name>
+                              </SubProject_Div>
+                            </SubProject_Main>
                           );
                         })}
-                      </div>
-                    </div>
+                      </SubProject>
+                      <AddSub>
+                        <div>
+                          <span>Add SubProject</span>
+                        </div>
+                      </AddSub>
+                    </Project_Main>
                   );
                 })}
-              </div>
-            </div>
+                <AddProject>
+                  <Add>Add Project</Add>
+                </AddProject>
+              </Project>
+            </Main>
           );
-          {
-            /* <h3 key={result.project.subproject.id}>
-                subprojectname : {result.project.subprojectname}
-              </h3>
-              <br />
-              <h4 key={result.project.subproject.detaillist.id}>
-                detaillist : {result.project.subproject.detaillist.detalname}
-              </h4>
-              <br /> */
-          }
-
-          // <Project>
-          //     <Project_Header>
-          //         <ProjectName></ProjectName>
-          //     </Project_Header>
-          //     <SubProject>
-
-          //     </SubProject>
-          //     <AddSub></AddSub>
-          // </Project>
         }}
       </Query>
     );
   }
 }
+
+//   <div>
+//   {data.detaillist.map(data => {
+//     return (
+//       <div key={data.id}>
+//         <h6 key={data.id}>detailname :{data.detailname}</h6>
+//       </div>
+//     );
+//   })}
+// </div>;
