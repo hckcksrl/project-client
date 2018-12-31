@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { EmailLogin } from "./queries";
 import { Mutation } from "react-apollo";
+import { Logined } from "../../../LocalQueries";
 
 const Input = styled.input`
   padding: 1em;
@@ -44,50 +45,57 @@ export default class Login extends React.Component {
     const { history } = this.props;
     const { email, password } = this.state;
     return (
-      <Mutation
-        mutation={EmailLogin}
-        variables={{ email: email, password: password }}
-        onCompleted={data => {
-          console.log(data);
-          const { Login } = data;
-          console.log(Login);
-          if (Login.result) {
-            localStorage.setItem("token", Login.token);
-            history.push(`/list/${Login.id}`);
-          } else {
-            console.log(Login.error);
-          }
-        }}
-      >
-        {Email_Login => (
-          <Form
-            onSubmit={e => {
-              e.preventDefault();
-              Email_Login({
-                variables: {
-                  email: email,
-                  password: password
-                }
-              });
+      <Mutation mutation={Logined}>
+        {UserLogin => (
+          <Mutation
+            mutation={EmailLogin}
+            variables={{ email: email, password: password }}
+            onCompleted={data => {
+              const { Login } = data;
+              if (Login.result) {
+                localStorage.setItem("token", Login.token);
+                UserLogin({
+                  variables: {
+                    token: Login.token
+                  }
+                });
+                history.push("/");
+              } else {
+                console.log(Login.error);
+              }
             }}
           >
-            <Input
-              placeholder="email"
-              type="email"
-              onChange={this._onInputChange}
-              value={email}
-              name={"email"}
-            />
-            <Password
-              placeholder="password"
-              type="password"
-              onChange={this._onInputChange}
-              value={password}
-              name={"password"}
-              //   minLength={5}
-            />
-            <Button type="submit">Login</Button>
-          </Form>
+            {Email_Login => (
+              <Form
+                onSubmit={e => {
+                  e.preventDefault();
+                  Email_Login({
+                    variables: {
+                      email: email,
+                      password: password
+                    }
+                  });
+                }}
+              >
+                <Input
+                  placeholder="email"
+                  type="email"
+                  onChange={this._onInputChange}
+                  value={email}
+                  name={"email"}
+                />
+                <Password
+                  placeholder="password"
+                  type="password"
+                  onChange={this._onInputChange}
+                  value={password}
+                  name={"password"}
+                  //   minLength={5}
+                />
+                <Button type="submit">Login</Button>
+              </Form>
+            )}
+          </Mutation>
         )}
       </Mutation>
     );
