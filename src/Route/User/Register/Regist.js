@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { EmailRegist } from "./queries";
 import { Mutation } from "react-apollo";
+import { Logined } from "../../../LocalQueries";
 
 const Input = styled.input`
   padding: 1em;
@@ -44,49 +45,54 @@ export default class Regist extends React.Component {
     const { history } = this.props;
     const { email, password } = this.state;
     return (
-      <Mutation
-        mutation={EmailRegist}
-        variables={{ email: email, password: password }}
-        onCompleted={data => {
-          console.log(data);
-          const { Regist } = data;
-          if (Regist.result) {
-            localStorage.setItem("token", Regist.token);
-            history.push("/");
-          } else {
-            console.log(Regist.error);
-          }
-        }}
-      >
-        {Email_Regist => (
-          <Form
-            onSubmit={e => {
-              e.preventDefault();
-              Email_Regist({
-                variables: {
-                  email: email,
-                  password: password
-                }
-              });
+      <Mutation mutation={Logined}>
+        {UserLogin => (
+          <Mutation
+            mutation={EmailRegist}
+            variables={{ email: email, password: password }}
+            onCompleted={data => {
+              console.log(data);
+              const { Regist } = data;
+              if (Regist.result) {
+                localStorage.setItem("token", Regist.token);
+                UserLogin({ variables: { token: Regist.token } });
+                history.push("/");
+              } else {
+                console.log(Regist.error);
+              }
             }}
           >
-            <Input
-              placeholder="email"
-              type="email"
-              onChange={this._onInputChange}
-              value={email}
-              name={"email"}
-            />
-            <Password
-              placeholder="password"
-              type="password"
-              onChange={this._onInputChange}
-              value={password}
-              name={"password"}
-              minLength={5}
-            />
-            <Button type="submit">Regist</Button>
-          </Form>
+            {Email_Regist => (
+              <Form
+                onSubmit={e => {
+                  e.preventDefault();
+                  Email_Regist({
+                    variables: {
+                      email: email,
+                      password: password
+                    }
+                  });
+                }}
+              >
+                <Input
+                  placeholder="email"
+                  type="email"
+                  onChange={this._onInputChange}
+                  value={email}
+                  name={"email"}
+                />
+                <Password
+                  placeholder="password"
+                  type="password"
+                  onChange={this._onInputChange}
+                  value={password}
+                  name={"password"}
+                  minLength={5}
+                />
+                <Button type="submit">Regist</Button>
+              </Form>
+            )}
+          </Mutation>
         )}
       </Mutation>
     );
