@@ -1,2 +1,2 @@
-import App from "./App";
-export default App;
+import Container from "./StartApp";
+export default Container;
