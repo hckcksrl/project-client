@@ -1,6 +1,6 @@
 import gql from "graphql-tag";
 
-export const Login = gql`
+export const Logined = gql`
   mutation Login($token: String!) {
     UserLogin(token: $token) @client
   }
@@ -9,17 +9,5 @@ export const Login = gql`
 export const Logout = gql`
   mutation Logout {
     UserLogout @client
-  }
-`;
-
-export const GetUser = gql`
-  {
-    GetMy {
-      result
-      error
-      user {
-        id
-      }
-    }
   }
 `;
