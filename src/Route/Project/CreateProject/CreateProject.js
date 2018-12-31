@@ -51,8 +51,7 @@ class CreateProjects extends React.Component {
               }).then(data => {
                 console.log(data.data);
                 if (data.data.CreateProject.result) {
-                  this.state.projectname = "";
-                  history.push("/project");
+                  history.push("/");
                 } else {
                   console.log(data.data.CreateProject.error);
                 }
