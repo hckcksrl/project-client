@@ -1,13 +1,18 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Query } from "react-apollo";
+import { Is_Login } from "./queries";
+import App from "./App";
 
-class StartApp extends Component {
+class Container extends Component {
   render() {
-    return <Link to={"/login"}>a</Link>;
+    return (
+      <Query query={Is_Login}>
+        {({ data }) => {
+          console.log(data.auth.isLoggedIn);
+          return <App isLoggedIn={data.auth.isLoggedIn} />;
+        }}
+      </Query>
+    );
   }
-  _click = () => {
-    this.render("/login");
-  };
 }
-
-export default StartApp;
+export default Container;
