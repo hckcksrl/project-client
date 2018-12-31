@@ -7,11 +7,7 @@ const Project = styled.div`
   display: flex;
   position: absolute;
 `;
-const Scroll = styled.div`
-  position: relative;
-`;
-
-const Project_Main = styled.div`
+const ProjectMain = styled.div`
   background-color: #dfe3e6;
   border-radius: 3px;
   box-sizing: border-box;
@@ -23,11 +19,11 @@ const Project_Main = styled.div`
   margin-left: 8px;
   width: 272px;
 `;
-const Project_Name = styled.span`
+const ProjectName = styled.span`
   font-size: 20px;
 `;
 
-const Project_Header = styled.div`
+const ProjectHeader = styled.div`
   flex: 0 0 auto;
   padding: 10px;
   position: relative;
@@ -42,7 +38,7 @@ const SubProject = styled.div`
   min-height: 0;
 `;
 
-const SubProject_Main = styled.a`
+const SubProjectMain = styled.a`
   background-color: #fff;
   border-radius: 3px;
   box-shadow: 0 1px 0 rgba(9, 45, 66, 0.25);
@@ -56,7 +52,7 @@ const SubProject_Main = styled.a`
   z-index: 0;
 `;
 
-const SubProject_Name = styled.span`
+const SubProjectName = styled.span`
   clear: both;
   display: block;
   margin: 0 0 4px;
@@ -98,7 +94,7 @@ const UserEmail = styled.span`
   position: fixed;
 `;
 
-const SubProject_Div = styled.div`
+const SubProjectDiv = styled.div`
   padding: 6px 8px 2px;
   position: relative;
   z-index: 10;
@@ -148,24 +144,23 @@ export default class List extends React.Component {
               <User>
                 <UserEmail key={result.id}>{result.email}</UserEmail>
               </User>
-              {/* <Scroll> */}
               <Project>
                 {project.map(data => {
                   return (
-                    <Project_Main key={data.id}>
-                      <Project_Header>
-                        <Project_Name>{data.projectname}</Project_Name>
-                      </Project_Header>
+                    <ProjectMain key={data.id}>
+                      <ProjectHeader>
+                        <ProjectName>{data.projectname}</ProjectName>
+                      </ProjectHeader>
                       <SubProject>
                         {data.subproject.map(data => {
                           return (
-                            <SubProject_Main key={data.id}>
-                              <SubProject_Div>
-                                <SubProject_Name>
+                            <SubProjectMain key={data.id}>
+                              <SubProjectDiv>
+                                <SubProjectName>
                                   {data.subprojectname}
-                                </SubProject_Name>
-                              </SubProject_Div>
-                            </SubProject_Main>
+                                </SubProjectName>
+                              </SubProjectDiv>
+                            </SubProjectMain>
                           );
                         })}
                       </SubProject>
@@ -174,14 +169,13 @@ export default class List extends React.Component {
                           <span>Add SubProject</span>
                         </AddSubInner>
                       </AddSub>
-                    </Project_Main>
+                    </ProjectMain>
                   );
                 })}
                 <AddProject>
                   <Add>Add Project</Add>
                 </AddProject>
               </Project>
-              {/* </Scroll> */}
             </Main>
           );
         }}
