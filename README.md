@@ -4,5 +4,5 @@
 
 ### Styled-Component
 
-(ex tello) Login , not Login
+(ex tello) Logout
 
