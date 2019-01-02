@@ -2,7 +2,31 @@ import React from "react";
 import { Query } from "react-apollo";
 import { GetList } from "./queris";
 import styled from "styled-components";
+import Logout from "../User/Logout";
 
+const Main = styled.div`
+  width: 100%;
+  height: 100%;
+`;
+const UserWrap = styled.div`
+  height: auto;
+  width: auto;
+`;
+const User = styled.div`
+  justify-content: left;
+  align-items: center;
+  position: relative;
+  padding: 1.5em;
+  width: auto;
+  margin: 1em;
+`;
+
+const UserEmail = styled.span`
+  color: white;
+  font-size: 18px;
+  line-height: 30px;
+  font-weight: 600;
+`;
 const Project = styled.div`
   display: flex;
   position: absolute;
@@ -29,12 +53,12 @@ const ProjectHeader = styled.div`
   position: relative;
   min-height: 20px;
 `;
+
 const SubProject = styled.div`
   flex: 1 1 auto;
   margin-bottom: 0;
   margin: 0 4px;
   padding: 0 4px;
-  z-index: 1;
   min-height: 0;
 `;
 
@@ -49,7 +73,6 @@ const SubProjectMain = styled.a`
   min-height: 20px;
   position: relative;
   text-decoration: none;
-  z-index: 0;
 `;
 
 const SubProjectName = styled.span`
@@ -74,30 +97,10 @@ const AddSub = styled.div`
 const AddSubInner = styled.div`
   margin-left: 5px;
 `;
-const Main = styled.div``;
-
-const User = styled.div`
-  display: flex;
-  justify-content: left;
-  align-items: center;
-  position: relative;
-  padding: 1.5em;
-
-  width: 100%;
-`;
-
-const UserEmail = styled.span`
-  color: white;
-  font-size: 18px;
-  font-weight: 700;
-  line-height: 32px;
-  position: fixed;
-`;
 
 const SubProjectDiv = styled.div`
   padding: 6px 8px 2px;
   position: relative;
-  z-index: 10;
 `;
 
 const AddProject = styled.div`
@@ -141,9 +144,12 @@ export default class List extends React.Component {
           const project = result.project;
           return (
             <Main>
-              <User>
-                <UserEmail key={result.id}>{result.email}</UserEmail>
-              </User>
+              <UserWrap>
+                <User>
+                  <UserEmail key={result.id}>{result.email}</UserEmail>
+                  <Logout />
+                </User>
+              </UserWrap>
               <Project>
                 {project.map(data => {
                   return (
@@ -183,13 +189,3 @@ export default class List extends React.Component {
     );
   }
 }
-
-//   <div>
-//   {data.detaillist.map(data => {
-//     return (
-//       <div key={data.id}>
-//         <h6 key={data.id}>detailname :{data.detailname}</h6>
-//       </div>
-//     );
-//   })}
-// </div>;
