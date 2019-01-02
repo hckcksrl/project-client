@@ -1,18 +1,20 @@
 import React from "react";
 import { Logout } from "../../../LocalQueries";
-import styled from "styled-components";
 import { Mutation } from "react-apollo";
+import styled from "styled-components";
 
-const Button = styled.button`
-  display: inline-block;
-  color: palevioletred;
-  font-size: 1em;
-  margin: 1em;
-  padding: 0.25em 1em;
-  border: 2px solid palevioletred;
-  border-radius: 3px;
+const Form = styled.form`
+  float: right;
+  font-size: 18px;
+  line-height: 30px;
+  font-weight: 600;
 `;
-const Form = styled.form``;
+const Button = styled.button`
+  float: right;
+  font-size: 18px;
+  line-height: 30px;
+  font-weight: 600;
+`;
 
 export default class LogOut extends React.Component {
   render() {
