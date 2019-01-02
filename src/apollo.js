@@ -74,7 +74,6 @@ const state = withClientState({
             }
           }
         });
-        console.log(cache.data);
         return null;
       }
     }
