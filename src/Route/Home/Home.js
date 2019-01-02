@@ -20,7 +20,6 @@ export default class Home extends React.Component {
     return (
       <Query query={MyId}>
         {data => {
-          console.log(data);
           return (
             <Form
               onSubmit={e => {
