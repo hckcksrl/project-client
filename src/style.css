@@ -8,3 +8,18 @@ body {
   height: 100%;
   width: 100%;
 }
+
+textarea {
+  text-rendering: auto;
+  color: initial;
+  letter-spacing: normal;
+  word-spacing: normal;
+  text-transform: none;
+  text-indent: 0px;
+  text-shadow: none;
+  display: inline-block;
+  text-align: start;
+  margin: 0em;
+  white-space: pre-wrap;
+  overflow: auto;
+}
