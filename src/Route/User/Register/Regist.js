@@ -7,7 +7,7 @@ import { Logined } from "../../../LocalQueries";
 const Input = styled.input`
   padding: 1em;
   margin: 1em;
-  color: ${props => props.inputColor || "black"};
+  color:  "black"
   background: papayawhip;
   border: none;
   border-radius: 3px;
@@ -16,19 +16,15 @@ const Input = styled.input`
 const Password = styled.input`
   padding: 1em;
   margin: 1em;
-  color: ${props => props.inputColor || "black"};
+  color: "black";
   background: papayawhip;
   border: none;
   border-radius: 3px;
 `;
 const Button = styled.button`
-  display: inline-block;
-  color: palevioletred;
-  font-size: 1em;
-  margin: 1em;
-  padding: 0.25em 1em;
-  border: 2px solid palevioletred;
-  border-radius: 3px;
+  font-size: 18px;
+  line-height: 30px;
+  font-weight: 600;
 `;
 
 const Form = styled.form``;
