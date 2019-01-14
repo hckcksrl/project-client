@@ -7,7 +7,7 @@ import { Logined } from "../../../LocalQueries";
 const Input = styled.input`
   padding: 1em;
   margin: 1em;
-  color: ${props => props.inputColor || "black"};
+  color: "black";
   background: papayawhip;
   border: none;
   border-radius: 3px;
@@ -16,7 +16,7 @@ const Input = styled.input`
 const Password = styled.input`
   padding: 1em;
   margin: 1em;
-  color: ${props => props.inputColor || "black"};
+  color: "black";
   background: papayawhip;
   border: none;
   border-radius: 3px;
