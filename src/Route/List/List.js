@@ -24,6 +24,7 @@ export default class List extends React.Component {
       }
     } = this.props;
     const uid = parseInt(userid);
+    const { history } = this.props;
     return (
       <Query query={GetList} variables={{ id: uid }}>
         {({ data, loading, error }) => {
@@ -34,7 +35,7 @@ export default class List extends React.Component {
           return (
             <Main>
               <HeaderPage email={result.email} />
-              <ProjectPage project={project} />
+              <ProjectPage project={project} history={history} id={uid} />
             </Main>
           );
         }}
