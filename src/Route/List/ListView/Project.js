@@ -5,7 +5,7 @@ import SubProjectPage from "./SubProject";
 import AddSubPage from "./AddSuPage";
 import AddPage from "./AddPage";
 import TextareaAutosize from "react-textarea-autosize";
-import { Mutation } from "react-apollo";
+import Edit from "../../Project/EditProject";
 
 const Project = styled.div`
   display: flex;
@@ -29,52 +29,39 @@ const ProjectName = styled.span`
   font-size: 20px;
   z-index: ;
 `;
-const ProjectEdit = styled(TextareaAutosize)`
-  background: transparent;
-  border: 1px solid transparent;
-  border-radius: 3px;
-  margin: -4px 0;
-  max-height: 256px;
-  padding-left: 6px;
-  padding-top : 7px
-  width: 90%;
-  z-index: 1;
-  position: absolute;
-  left: 5px;
-  font-size: 20px;
-  line-height: 14px;
-  text-align: start;
-`;
+
 const ProjectHeader = styled.div`
   flex: 0 0 auto;
   padding: 10px;
   position: relative;
   min-height: 20px;
 `;
+
 class ProjectPage extends React.Component {
   constructor() {
     super();
-
     this.state = {
       projectname: ""
     };
   }
   render() {
-    const { project } = this.props;
+    const { project, history } = this.props;
     return (
       <Project>
         {project.map(data => {
           return (
             <ProjectMain key={data.id}>
               <ProjectHeader>
-                {/* <ProjectName id={`name${data.id}`}>
+                {/* <ProjectName
+                  id={`name${data.id}`}
+                  onClick={() => this.style(data.id)}
+                >
                   {data.projectname}
                 </ProjectName> */}
-                <ProjectEdit
-                  id={`edit${data.id}`}
-                  onClick={() => this.style(data.id)}
-                  onKeyPress={() => this.edit}
-                  defaultValue={data.projectname}
+                <Edit
+                  id={data.id}
+                  projectname={data.projectname}
+                  history={history}
                 />
               </ProjectHeader>
               <SubProjectPage subproject={data.subproject} />
@@ -89,13 +76,21 @@ class ProjectPage extends React.Component {
   style = key => {
     const edit = document.getElementById(`edit${key}`);
     edit.style.background = "white";
-    return (edit.style.zIndex = "0");
+    return true;
   };
-  edit = e => {};
+  edit = (e, key, history) => {
+    const projectname = document.getElementById(`edit${key}`).value;
+    const code = e.which;
+    if (code === 13) {
+      Edit(projectname, key, history);
+    }
+    return true;
+  };
 }
 
 ProjectPage.propTypes = {
-  project: PropTypes.array.isRequired
+  project: PropTypes.array.isRequired,
+  id: PropTypes.number.isRequired
 };
 
 export default ProjectPage;
