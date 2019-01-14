@@ -2,6 +2,7 @@ import React from "react";
 import { Logout } from "../../../LocalQueries";
 import { Mutation } from "react-apollo";
 import styled from "styled-components";
+import client from "../../../apollo";
 
 const Form = styled.form`
   float: right;
