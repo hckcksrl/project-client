@@ -8,6 +8,7 @@ const SubProject = styled.div`
   margin: 0 4px;
   padding: 0 4px;
   min-height: 0;
+  float: top;
 `;
 
 const SubProjectMain = styled.a`
@@ -20,7 +21,6 @@ const SubProjectMain = styled.a`
   max-width: 300px;
   min-height: 20px;
   position: relative;
-  text-decoration: none;
 `;
 
 const SubProjectName = styled.span`
