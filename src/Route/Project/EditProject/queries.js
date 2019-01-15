@@ -5,6 +5,10 @@ export const EditProject = gql`
     EditProject(id: $id, projectname: $projectname) {
       result
       error
+      project {
+        id
+        projectname
+      }
     }
   }
 `;
