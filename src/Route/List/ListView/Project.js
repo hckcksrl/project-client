@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import SubProjectPage from "./SubProject";
 import AddSubPage from "./AddSuPage";
 import AddPage from "./AddPage";
-import TextareaAutosize from "react-textarea-autosize";
 import Edit from "../../Project/EditProject";
 
 const Project = styled.div`
@@ -14,6 +13,7 @@ const Project = styled.div`
 `;
 
 const ProjectMain = styled.div`
+  flex: auto;
   background-color: #dfe3e6;
   border-radius: 3px;
   box-sizing: border-box;
@@ -25,16 +25,11 @@ const ProjectMain = styled.div`
   margin: 1%;
   flex-shrink: 1;
 `;
-const ProjectName = styled.span`
-  font-size: 20px;
-  z-index: ;
-`;
 
 const ProjectHeader = styled.div`
   flex: 0 0 auto;
   padding: 10px;
   position: relative;
-  min-height: 20px;
 `;
 
 class ProjectPage extends React.Component {
@@ -45,23 +40,18 @@ class ProjectPage extends React.Component {
     };
   }
   render() {
-    const { project, history } = this.props;
+    const { project, history, id } = this.props;
     return (
       <Project>
         {project.map(data => {
           return (
             <ProjectMain key={data.id}>
-              <ProjectHeader>
-                {/* <ProjectName
-                  id={`name${data.id}`}
-                  onClick={() => this.style(data.id)}
-                >
-                  {data.projectname}
-                </ProjectName> */}
+              <ProjectHeader id={`main${data.id}`}>
                 <Edit
                   id={data.id}
                   projectname={data.projectname}
                   history={history}
+                  userid={id}
                 />
               </ProjectHeader>
               <SubProjectPage subproject={data.subproject} />
@@ -73,19 +63,6 @@ class ProjectPage extends React.Component {
       </Project>
     );
   }
-  style = key => {
-    const edit = document.getElementById(`edit${key}`);
-    edit.style.background = "white";
-    return true;
-  };
-  edit = (e, key, history) => {
-    const projectname = document.getElementById(`edit${key}`).value;
-    const code = e.which;
-    if (code === 13) {
-      Edit(projectname, key, history);
-    }
-    return true;
-  };
 }
 
 ProjectPage.propTypes = {
