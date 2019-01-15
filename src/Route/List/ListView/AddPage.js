@@ -12,8 +12,10 @@ const AddProject = styled.div`
   position: relative;
   white-space: normal;
   margin: 1%;
-  width: 300px;
+  max-width: 600px;
+  min-width: 300px;
   flex-shrink: 1;
+  flex: auto;
 `;
 const Add = styled.span`
   padding: 6px 8px;
