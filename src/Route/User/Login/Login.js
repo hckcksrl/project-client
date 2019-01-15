@@ -40,6 +40,7 @@ export default class Login extends React.Component {
   render() {
     const { history } = this.props;
     const { email, password } = this.state;
+    console.log(history);
     return (
       <Mutation mutation={Logined}>
         {UserLogin => (
@@ -55,7 +56,7 @@ export default class Login extends React.Component {
                     token: Login.token
                   }
                 });
-                history.push("/");
+                history.go();
               } else {
                 console.log(Login.error);
               }
@@ -86,7 +87,6 @@ export default class Login extends React.Component {
                   onChange={this._onInputChange}
                   value={password}
                   name={"password"}
-                  //   minLength={5}
                 />
                 <Button type="submit">Login</Button>
               </Form>
