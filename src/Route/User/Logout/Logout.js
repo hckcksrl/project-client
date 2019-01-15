@@ -2,7 +2,6 @@ import React from "react";
 import { Logout } from "../../../LocalQueries";
 import { Mutation } from "react-apollo";
 import styled from "styled-components";
-import client from "../../../apollo";
 
 const Form = styled.form`
   float: right;
@@ -24,13 +23,13 @@ export default class LogOut extends React.Component {
       <Mutation
         mutation={Logout}
         onCompleted={data => {
-          history.push("/");
+          history.go();
         }}
       >
-        {UserLogout => (
+        {(UserLogout, { data, loading, error, called, client }) => (
           <Form
             onSubmit={e => {
-              UserLogout();
+              UserLogout().then(() => client.clearStore());
             }}
           >
             <Button type="submit">Logout</Button>
