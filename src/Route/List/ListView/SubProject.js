@@ -18,7 +18,7 @@ const SubProjectMain = styled.a`
   cursor: pointer;
   display: block;
   margin-bottom: 8px;
-  max-width: 300px;
+  width: 100%;
   min-height: 20px;
   position: relative;
 `;
