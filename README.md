@@ -4,5 +4,5 @@
 
 ### Styled-Component
 
-(ex tello) css  
+(ex tello) project edit
 
