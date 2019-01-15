@@ -8,64 +8,70 @@ import TextareaAutosize from "react-textarea-autosize";
 
 const ProjectEdit = styled(TextareaAutosize)`
   background: transparent;
-  box-sizing:border-box;
+  box-sizing: border-box;
   border: 1px solid transparent;
   border-radius: 3px;
-  margin: -4px 0;
+  top: 7px;
   max-height: 256px;
   padding-left: 6px;
-  padding-top : 7px
-  width: 75%;
+  width: 95%;
   position: absolute;
   left: 8px;
   font-size: 20px;
-  line-height: 14px;
+  line-height: 20px;
   text-align: start;
-  visibility: visible;
+  visibility: hidden;
+  resize: none;
+  white-space: pre-line;
+  z-index: 1;
 `;
 const Form = styled.form``;
 const Button = styled.button`
+  visibility: hidden;
   float: right;
+`;
+
+const ProjectName = styled.a`
+  padding-left: 6px;
+  font-size: 20px;
+  width: 100%;
+  line-height: 14px;
+  white-space: pre-wrap;
+  z-index: 2;
+  line-height: 20px;
+  float: left;
+`;
+const ProjectContainer = styled.div`
+  cursor: pointer;
 `;
 
 class Edit extends React.Component {
   render() {
-    const { projectname, id, history, userid } = this.props;
+    const { projectname, id, userid } = this.props;
     return (
-      <Mutation
-        mutation={EditProject}
-        onCompleted={data => {
-          const result = data.EditProject.result;
-          if (result === true) {
-            history.push(`/list/${userid}`);
-          }
-        }}
-      >
+      <Mutation mutation={EditProject}>
         {Edit_Project => (
           <Form
-            onSubmit={e => {
-              e.preventDefault();
-              Edit_Project({
-                refetchQueries: [
-                  {
-                    query: GetList,
-                    variables: { id: userid }
-                  }
-                ],
-                variables: {
-                  projectname: projectname,
-                  id: id
-                }
-              });
-            }}
+            id={`form${id}`}
+            onSubmit={e => this.complete(e, id, Edit_Project, userid)}
           >
-            <ProjectEdit
-              id={`edit${id}`}
+            <ProjectContainer
+              id={`project${id}`}
               onClick={() => this.style(id)}
-              onKeyPress={e => this.edit(e, id, history)}
-              defaultValue={projectname}
-            />
-            <Button type="submit">확인</Button>
+            >
+              <ProjectName id={`name${id}`}>{projectname}</ProjectName>
+              <ProjectEdit
+                type="text"
+                id={`edit${id}`}
+                onClick={() => this.style(id)}
+                onKeyDown={e => this.press(e, id)}
+                onKeyUp={e => this.height(e, id)}
+                defaultValue={projectname}
+              />
+              <Button id={`button${id}`} type="submit">
+                확인
+              </Button>
+            </ProjectContainer>
           </Form>
         )}
       </Mutation>
@@ -73,16 +79,46 @@ class Edit extends React.Component {
   }
   style = key => {
     const edit = document.getElementById(`edit${key}`);
+    document.getElementById(`project${key}`).style.visibility = "hidden";
+    edit.click();
     edit.style.background = "white";
+    edit.style.visibility = "visible";
+    edit.focus();
     return true;
   };
-  edit = (e, key, history) => {
-    const projectname = document.getElementById(`edit${key}`).value;
+  complete = (e, id, Edit_Project, userid) => {
+    e.preventDefault();
+    const project = document.getElementById(`edit${id}`).value;
+    Edit_Project({
+      refetchQueries: [
+        {
+          query: GetList,
+          variables: { id: userid }
+        }
+      ],
+      variables: {
+        projectname: project,
+        id: id
+      }
+    });
+  };
+  press = (e, key) => {
     const code = e.which;
+    const edit = document.getElementById(`edit${key}`);
+    document.getElementById(`main${key}`).style.height = edit.style.height;
     if (code === 13) {
-      Edit(projectname, key, history);
+      e.preventDefault();
+      document.getElementById(`button${key}`).click();
+      edit.style.visibility = "hidden";
+      document.getElementById(`project${key}`).style.visibility = "visible";
+      edit.style.background = "transparent";
+      return true;
     }
     return true;
+  };
+  height = (e, key) => {
+    const edit = document.getElementById(`edit${key}`);
+    document.getElementById(`main${key}`).style.height = edit.style.height;
   };
 }
 
