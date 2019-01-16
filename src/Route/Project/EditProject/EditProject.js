@@ -14,7 +14,7 @@ const ProjectEdit = styled(TextareaAutosize)`
   top: 7px;
   max-height: 256px;
   padding-left: 6px;
-  width: 95%;
+  width: 95.5%;
   position: absolute;
   left: 8px;
   font-size: 20px;
@@ -61,7 +61,6 @@ class Edit extends React.Component {
             >
               <ProjectName id={`name${id}`}>{projectname}</ProjectName>
               <ProjectEdit
-                type="text"
                 id={`edit${id}`}
                 onClick={() => this.style(id)}
                 onKeyDown={e => this.press(e, id)}
