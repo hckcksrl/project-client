@@ -30,6 +30,7 @@ const ProjectHeader = styled.div`
   flex: 0 0 auto;
   padding: 10px;
   position: relative;
+  height: 26px;
 `;
 
 class ProjectPage extends React.Component {
@@ -54,8 +55,12 @@ class ProjectPage extends React.Component {
                   userid={id}
                 />
               </ProjectHeader>
-              <SubProjectPage subproject={data.subproject} />
-              <AddSubPage />
+              <SubProjectPage
+                subproject={data.subproject}
+                projectid={data.id}
+                userid={id}
+              />
+              <AddSubPage projectid={data.id} />
             </ProjectMain>
           );
         })}
