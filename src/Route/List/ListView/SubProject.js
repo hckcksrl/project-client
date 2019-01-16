@@ -45,7 +45,7 @@ class SubProjectPage extends React.Component {
         {subproject.map(data => {
           return (
             <SubProjectMain key={data.id}>
-              <SubProjectDiv id={`subdiv`}>
+              <SubProjectDiv id={`sub_div`}>
                 <SubProjectName id={`sub${data.id}`}>
                   {data.subprojectname}
                 </SubProjectName>
@@ -58,20 +58,6 @@ class SubProjectPage extends React.Component {
       </SubProject>
     );
   }
-  press = (e, key) => {
-    const code = e.which;
-    const add = document.getElementById(`txtarea${key}`);
-    document.getElementById(`area${key}`).style.height = add.style.height + 6;
-    if (code === 13) {
-      e.preventDefault();
-      return;
-    }
-    return true;
-  };
-  height = (e, key) => {
-    const edit = document.getElementById(`edit${key}`);
-    document.getElementById(`main${key}`).style.height = edit.style.height;
-  };
 }
 
 SubProjectPage.propTypes = {
