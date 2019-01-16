@@ -4,5 +4,5 @@
 
 ### Styled-Component
 
-(ex tello) project edit
+(ex tello) focusout 어케하냐 ㅡㅡ
 
