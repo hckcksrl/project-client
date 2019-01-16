@@ -5,12 +5,12 @@ import PropTypes from "prop-types";
 const AddSub = styled.div`
   border-radius: 0 0 3px 3px;
   color: #6b808c;
-  display: inline-block;
   flex: 0 0 auto;
   padding: 10px;
   position: relative;
   text-decoration: none;
   height: auto;
+  display: inline-block;
 `;
 
 const AddSubInner = styled.div`
@@ -28,8 +28,7 @@ class AddSubPage extends React.Component {
     return (
       <AddSub
         id={`addwrap${projectid}`}
-        onClick={() => this.click(projectid)}
-        on={() => this.focusout(projectid)}
+        onClick={e => this._click(e, projectid)}
       >
         <AddSubInner>
           <AddSubName>Add SubProject</AddSubName>
@@ -37,15 +36,10 @@ class AddSubPage extends React.Component {
       </AddSub>
     );
   }
-  click = id => {
-    document.getElementById(`area${id}`).style.display = "block";
+  _click = (e, id) => {
     document.getElementById(`addwrap${id}`).style.display = "none";
+    document.getElementById(`area${id}`).style.display = "block";
     document.getElementById(`txtarea${id}`).focus();
-  };
-  focusout = id => {
-    document.getElementById(`addwrap${id}`).style.display = "block";
-    document.getElementById(`area${id}`).style.display = "none";
-    document.getElementById(`txtarea${id}`);
   };
 }
 
