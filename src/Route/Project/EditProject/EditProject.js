@@ -53,19 +53,19 @@ class Edit extends React.Component {
         {Edit_Project => (
           <Form
             id={`form${id}`}
-            onSubmit={e => this.complete(e, id, Edit_Project, userid)}
+            onSubmit={e => this._complete(e, id, Edit_Project, userid)}
           >
             <ProjectContainer
               id={`project${id}`}
-              onClick={() => this.style(id)}
+              onClick={e => this._style(e, id)}
             >
               <ProjectName id={`name${id}`}>{projectname}</ProjectName>
               <ProjectEdit
                 id={`edit${id}`}
-                onClick={() => this.style(id)}
-                onKeyDown={e => this.press(e, id)}
-                onKeyUp={e => this.height(e, id)}
+                onKeyDown={e => this._press(e, id)}
+                onKeyUp={e => this._height(e, id)}
                 defaultValue={projectname}
+                onBlur={e => this._focusout(e, id, projectname)}
               />
               <Button id={`button${id}`} type="submit">
                 확인
@@ -76,18 +76,19 @@ class Edit extends React.Component {
       </Mutation>
     );
   }
-  style = key => {
+  _style = (e, key) => {
+    e.preventDefault();
     const edit = document.getElementById(`edit${key}`);
-    document.getElementById(`project${key}`).style.visibility = "hidden";
-    edit.click();
+    e.target.style.visibility = "hidden";
     edit.style.background = "white";
     edit.style.visibility = "visible";
     edit.focus();
     return true;
   };
-  complete = (e, id, Edit_Project, userid) => {
+
+  _complete = (e, id, Edit_Project, userid) => {
     e.preventDefault();
-    const project = document.getElementById(`edit${id}`).value;
+    const project = e.target.value;
     Edit_Project({
       refetchQueries: [
         {
@@ -101,23 +102,31 @@ class Edit extends React.Component {
       }
     });
   };
-  press = (e, key) => {
+
+  _press = (e, key) => {
     const code = e.which;
-    const edit = document.getElementById(`edit${key}`);
-    document.getElementById(`main${key}`).style.height = edit.style.height;
+    document.getElementById(`main${key}`).style.height = e.target.style.height;
     if (code === 13) {
       e.preventDefault();
       document.getElementById(`button${key}`).click();
-      edit.style.visibility = "hidden";
+      e.target.style.visibility = "hidden";
+      e.target.style.background = "transparent";
       document.getElementById(`project${key}`).style.visibility = "visible";
-      edit.style.background = "transparent";
       return true;
     }
     return true;
   };
-  height = (e, key) => {
-    const edit = document.getElementById(`edit${key}`);
-    document.getElementById(`main${key}`).style.height = edit.style.height;
+  _height = (e, key) => {
+    e.preventDefault();
+    document.getElementById(`main${key}`).style.height = e.target.style.height;
+  };
+
+  _focusout = (e, key, projectname) => {
+    e.preventDefault();
+    e.target.style.visibility = "hidden";
+    e.target.value = projectname;
+    document.getElementById(`name${key}`).style.visibility = "visible";
+    document.getElementById(`project${key}`).style.visibility = "visible";
   };
 }
 
