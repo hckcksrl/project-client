@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
+import CreateSubProject from "../../SubProject/CreateSubProject";
+import DeleteSubProject from "../../SubProject/DeleteSubProject";
 
 const SubProject = styled.div`
   flex: 1 1 auto;
@@ -24,7 +26,6 @@ const SubProjectMain = styled.a`
 `;
 
 const SubProjectName = styled.span`
-  clear: both;
   display: block;
   margin: 0 0 4px;
   text-decoration: none;
@@ -38,25 +39,45 @@ const SubProjectDiv = styled.div`
 
 class SubProjectPage extends React.Component {
   render() {
-    const { subproject } = this.props;
+    const { subproject, projectid, userid } = this.props;
     return (
       <SubProject>
         {subproject.map(data => {
           return (
             <SubProjectMain key={data.id}>
-              <SubProjectDiv>
-                <SubProjectName>{data.subprojectname}</SubProjectName>
+              <SubProjectDiv id={`subdiv`}>
+                <SubProjectName id={`sub${data.id}`}>
+                  {data.subprojectname}
+                </SubProjectName>
+                <DeleteSubProject subprojectid={data.id} userid={userid} />
               </SubProjectDiv>
             </SubProjectMain>
           );
         })}
+        <CreateSubProject projectid={projectid} userid={userid} />
       </SubProject>
     );
   }
+  press = (e, key) => {
+    const code = e.which;
+    const add = document.getElementById(`txtarea${key}`);
+    document.getElementById(`area${key}`).style.height = add.style.height + 6;
+    if (code === 13) {
+      e.preventDefault();
+      return;
+    }
+    return true;
+  };
+  height = (e, key) => {
+    const edit = document.getElementById(`edit${key}`);
+    document.getElementById(`main${key}`).style.height = edit.style.height;
+  };
 }
 
 SubProjectPage.propTypes = {
-  subproject: PropTypes.array.isRequired
+  subproject: PropTypes.array.isRequired,
+  projectid: PropTypes.number.isRequired,
+  userid: PropTypes.number.isRequired
 };
 
 export default SubProjectPage;
