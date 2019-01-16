@@ -47,13 +47,14 @@ class CreateSubProject extends React.Component {
             {Create_Sub => (
               <Form
                 onSubmit={e => {
-                  this.complete(e, projectid, Create_Sub, userid);
+                  this._complete(e, projectid, Create_Sub, userid);
                 }}
               >
                 <AddArea
                   id={`txtarea${projectid}`}
-                  onKeyDown={e => this.press(e, projectid)}
+                  onKeyDown={e => this._press(e, projectid)}
                   placeholder="Enter Submit"
+                  onBlur={e => this._focusout(e, projectid)}
                 />
                 <Button id={`create_sub_btn${projectid}`} type="submit">
                   확인
@@ -65,7 +66,7 @@ class CreateSubProject extends React.Component {
       </AddDiv>
     );
   }
-  complete = (e, projectid, Create_Sub, userid) => {
+  _complete = (e, projectid, Create_Sub, userid) => {
     e.preventDefault();
     const subproject = document.getElementById(`txtarea${projectid}`).value;
     if (subproject !== "") {
@@ -86,7 +87,7 @@ class CreateSubProject extends React.Component {
       console.log("error");
     }
   };
-  press = (e, key) => {
+  _press = (e, key) => {
     const code = e.which;
     if (code === 13) {
       e.preventDefault();
@@ -96,6 +97,13 @@ class CreateSubProject extends React.Component {
       return true;
     }
     return true;
+  };
+
+  _focusout = (e, id) => {
+    e.preventDefault();
+    document.getElementById(`area${id}`).style.display = "none";
+    document.getElementById(`addwrap${id}`).style.display = "block";
+    document.getElementById(`txtarea${id}`).value = "";
   };
 }
 
