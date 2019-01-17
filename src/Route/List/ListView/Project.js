@@ -5,6 +5,7 @@ import SubProjectPage from "./SubProject";
 import AddSubPage from "./AddSuPage";
 import AddPage from "./AddPage";
 import Edit from "../../Project/EditProject";
+import DeleteProject from "../../Project/DeleteProject/DeleteProject";
 
 const Project = styled.div`
   display: flex;
@@ -28,9 +29,11 @@ const ProjectMain = styled.div`
 
 const ProjectHeader = styled.div`
   flex: 0 0 auto;
-  padding: 10px;
+  padding: 5px;
   position: relative;
-  height: 26px;
+  height: 36px;
+  padding-right: 50px;
+  padding-bottom: 2px;
 `;
 
 class ProjectPage extends React.Component {
@@ -55,6 +58,7 @@ class ProjectPage extends React.Component {
                   userid={id}
                 />
               </ProjectHeader>
+              <DeleteProject projectid={data.id} userid={id} />
               <SubProjectPage
                 subproject={data.subproject}
                 projectid={data.id}
@@ -64,7 +68,7 @@ class ProjectPage extends React.Component {
             </ProjectMain>
           );
         })}
-        <AddPage />
+        <AddPage userid={id} />
       </Project>
     );
   }
