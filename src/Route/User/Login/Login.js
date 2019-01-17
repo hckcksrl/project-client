@@ -40,7 +40,6 @@ export default class Login extends React.Component {
   render() {
     const { history } = this.props;
     const { email, password } = this.state;
-    console.log(history);
     return (
       <Mutation mutation={Logined}>
         {UserLogin => (
