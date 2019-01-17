@@ -11,6 +11,7 @@ const AddSub = styled.div`
   text-decoration: none;
   height: auto;
   display: inline-block;
+  cursor: pointer;
 `;
 
 const AddSubInner = styled.div`
@@ -29,6 +30,8 @@ class AddSubPage extends React.Component {
       <AddSub
         id={`addwrap${projectid}`}
         onClick={e => this._click(e, projectid)}
+        onMouseOver={e => this._onMouse(e, projectid)}
+        onMouseLeave={e => this._outMouse(e, projectid)}
       >
         <AddSubInner>
           <AddSubName>Add SubProject</AddSubName>
@@ -40,6 +43,16 @@ class AddSubPage extends React.Component {
     document.getElementById(`addwrap${id}`).style.display = "none";
     document.getElementById(`area${id}`).style.display = "block";
     document.getElementById(`txtarea${id}`).focus();
+  };
+  _onMouse = (e, id) => {
+    e.preventDefault();
+    document.getElementById(`addwrap${id}`).style.backgroundColor = "#798d99";
+    document.getElementById(`addwrap${id}`).style.color = "#000000";
+  };
+  _outMouse = (e, id) => {
+    e.preventDefault();
+    document.getElementById(`addwrap${id}`).style.backgroundColor = "#dfe3e6";
+    document.getElementById(`addwrap${id}`).style.color = "#6b808c";
   };
 }
 
