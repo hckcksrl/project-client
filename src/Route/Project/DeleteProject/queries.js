@@ -1,8 +1,8 @@
 import gql from "graphql-tag";
 
-export const DeleteProject = gql`
+export const DelProject = gql`
   mutation Delete_Project($id: Int!) {
-    CreateProject(id: $id) {
+    DeleteProject(id: $id) {
       result
       error
     }
