@@ -4,5 +4,5 @@
 
 ### Styled-Component
 
-(ex tello) focusout 어케하냐 ㅡㅡ
+(ex tello) detaillist하믄됨
 
