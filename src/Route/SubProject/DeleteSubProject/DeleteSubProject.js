@@ -17,6 +17,8 @@ const Delete = styled.button`
   top: 4px;
   z-index: 40;
   text-align: center;
+  cursor: pointer;
+  visibility: hidden;
 `;
 const DeleteDiv = styled.div``;
 const Form = styled.form``;
