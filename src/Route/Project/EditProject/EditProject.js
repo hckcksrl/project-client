@@ -14,7 +14,7 @@ const ProjectEdit = styled(TextareaAutosize)`
   top: 7px;
   max-height: 256px;
   padding-left: 6px;
-  width: 95.5%;
+  width: 85%;
   position: absolute;
   left: 8px;
   font-size: 20px;
@@ -25,24 +25,33 @@ const ProjectEdit = styled(TextareaAutosize)`
   white-space: pre-line;
   z-index: 1;
 `;
-const Form = styled.form``;
+const Form = styled.form`
+  height: 100%;
+  width: 100%;
+`;
+
 const Button = styled.button`
   visibility: hidden;
   float: right;
+  z-index: 10;
+  top: 7px;
 `;
 
 const ProjectName = styled.a`
   padding-left: 6px;
   font-size: 20px;
   width: 100%;
+  height: 100%;
   line-height: 14px;
   white-space: pre-wrap;
-  z-index: 2;
   line-height: 20px;
   float: left;
+  padding-top: 7px;
 `;
 const ProjectContainer = styled.div`
   cursor: pointer;
+  height: 100%;
+  width: 100%;
 `;
 
 class Edit extends React.Component {
@@ -57,7 +66,7 @@ class Edit extends React.Component {
           >
             <ProjectContainer
               id={`project${id}`}
-              onClick={e => this._style(e, id)}
+              onClick={() => this._click(id)}
             >
               <ProjectName id={`name${id}`}>{projectname}</ProjectName>
               <ProjectEdit
@@ -76,19 +85,17 @@ class Edit extends React.Component {
       </Mutation>
     );
   }
-  _style = (e, key) => {
-    e.preventDefault();
+  _click = key => {
     const edit = document.getElementById(`edit${key}`);
-    e.target.style.visibility = "hidden";
+    document.getElementById(`project${key}`).style.visibility = "hidden";
     edit.style.background = "white";
     edit.style.visibility = "visible";
     edit.focus();
     return true;
   };
-
   _complete = (e, id, Edit_Project, userid) => {
     e.preventDefault();
-    const project = e.target.value;
+    const project = document.getElementById(`edit${id}`).value;
     Edit_Project({
       refetchQueries: [
         {
@@ -102,25 +109,25 @@ class Edit extends React.Component {
       }
     });
   };
-
   _press = (e, key) => {
     const code = e.which;
-    document.getElementById(`main${key}`).style.height = e.target.style.height;
+    const edit = document.getElementById(`edit${key}`);
+    document.getElementById(`main${key}`).style.height = edit.style.height;
     if (code === 13) {
       e.preventDefault();
       document.getElementById(`button${key}`).click();
-      e.target.style.visibility = "hidden";
-      e.target.style.background = "transparent";
+      edit.style.visibility = "hidden";
       document.getElementById(`project${key}`).style.visibility = "visible";
+      edit.style.background = "transparent";
       return true;
     }
     return true;
   };
+
   _height = (e, key) => {
     e.preventDefault();
     document.getElementById(`main${key}`).style.height = e.target.style.height;
   };
-
   _focusout = (e, key, projectname) => {
     e.preventDefault();
     e.target.style.visibility = "hidden";
