@@ -1,14 +1,22 @@
 import React from "react";
 import styled from "styled-components";
-const AddProject = styled.div`
-  background-color: rgba(0, 0, 0, 0.12);
+import CreateProject from "../../Project/CreateProject";
+import PropTypes from "prop-types";
+
+const ClickAdd = styled.div`
+  display: block;
   cursor: pointer;
-  color: #fff;
+  margin: 1%;
+`;
+const Add = styled.span`
+  color: white;
+`;
+const AddDiv = styled.div`
+  background-color: rgba(0, 0, 0, 0.12);
   border-radius: 3px;
   box-sizing: border-box;
-  display: flex;
   flex-direction: column;
-  height: 100%;
+  height: 30px;
   position: relative;
   white-space: normal;
   margin: 1%;
@@ -16,19 +24,31 @@ const AddProject = styled.div`
   min-width: 300px;
   flex-shrink: 1;
   flex: auto;
-`;
-const Add = styled.span`
-  padding: 6px 8px;
+  padding: 1px;
 `;
 
 class AddPage extends React.Component {
   render() {
+    const { userid } = this.props;
     return (
-      <AddProject>
-        <Add>Add Project</Add>
-      </AddProject>
+      <AddDiv id="add">
+        <ClickAdd id={`ClickAdd`} onClick={e => this._Click(e)}>
+          <Add>Add Project</Add>
+        </ClickAdd>
+        <CreateProject userid={userid} />
+      </AddDiv>
     );
   }
+  _Click = e => {
+    document.getElementById(`ClickAdd`).style.display = "none";
+    document.getElementById(`add_div`).style.display = "block";
+    document.getElementById(`addArea`).focus();
+    document.getElementById(`add`).style.height = "80px";
+  };
 }
+
+AddPage.propTypes = {
+  userid: PropTypes.number.isRequired
+};
 
 export default AddPage;
