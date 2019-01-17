@@ -44,8 +44,13 @@ class SubProjectPage extends React.Component {
       <SubProject>
         {subproject.map(data => {
           return (
-            <SubProjectMain key={data.id}>
-              <SubProjectDiv id={`sub_div`}>
+            <SubProjectMain
+              key={data.id}
+              id={`sub_div${data.id}`}
+              onMouseOver={e => this._onMouse(e, data.id)}
+              onMouseOut={e => this._outMouse(e, data.id)}
+            >
+              <SubProjectDiv>
                 <SubProjectName id={`sub${data.id}`}>
                   {data.subprojectname}
                 </SubProjectName>
@@ -58,6 +63,16 @@ class SubProjectPage extends React.Component {
       </SubProject>
     );
   }
+  _onMouse = (e, id) => {
+    e.preventDefault();
+    document.getElementById(`sub_div${id}`).style.backgroundColor = "#f5f6f7";
+    document.getElementById(`sub_del${id}`).style.visibility = "visible";
+  };
+  _outMouse = (e, id) => {
+    e.preventDefault();
+    document.getElementById(`sub_div${id}`).style.backgroundColor = "#ffffff";
+    document.getElementById(`sub_del${id}`).style.visibility = "hidden";
+  };
 }
 
 SubProjectPage.propTypes = {
