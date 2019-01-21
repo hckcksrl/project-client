@@ -109,16 +109,20 @@ class CreateProjects extends React.Component {
   };
   _press = e => {
     const code = e.which;
-    if (document.getElementById(`addArea`).value === "") {
-      return false;
-    }
     if (code === 13) {
       e.preventDefault();
-      document.getElementById(`c_p_btn`).click();
-      document.getElementById(`add_div`).style.display = "none";
-      document.getElementById(`ClickAdd`).style.display = "none";
-      e.target.value = "";
-      return true;
+      if (document.getElementById(`addArea`).value === "") {
+        document.getElementById(`add_div`).style.display = "none";
+        document.getElementById(`ClickAdd`).style.display = "none";
+
+        return false;
+      } else {
+        document.getElementById(`c_p_btn`).click();
+        document.getElementById(`add_div`).style.display = "none";
+        document.getElementById(`ClickAdd`).style.display = "none";
+        e.target.value = "";
+        return true;
+      }
     }
     return true;
   };
@@ -128,6 +132,7 @@ class CreateProjects extends React.Component {
     document.getElementById(`ClickAdd`).style.display = "block";
     document.getElementById(`add_div`).style.display = "none";
     document.getElementById(`add`).style.height = "30px";
+    document.getElementById(`addArea`).value = "";
   };
 }
 
