@@ -14,6 +14,7 @@ const Delete = styled.button`
   font-size: 15px;
   border: none;
   background-color: transparent;
+  cursor: pointer;
 `;
 
 const Form = styled.form``;
