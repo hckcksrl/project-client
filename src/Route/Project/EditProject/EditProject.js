@@ -7,7 +7,7 @@ import styled from "styled-components";
 import TextareaAutosize from "react-textarea-autosize";
 
 const ProjectEdit = styled(TextareaAutosize)`
-  background: transparent;
+  background: ${props => props.inputback};
   box-sizing: border-box;
   border: 1px solid transparent;
   border-radius: 3px;
@@ -20,7 +20,7 @@ const ProjectEdit = styled(TextareaAutosize)`
   font-size: 20px;
   line-height: 20px;
   text-align: start;
-  visibility: hidden;
+  visibility: ${props => props.inputvisible};
   resize: none;
   white-space: pre-line;
   z-index: 1;
@@ -51,10 +51,19 @@ const ProjectName = styled.a`
 const ProjectContainer = styled.div`
   cursor: pointer;
   height: 100%;
-  width: 100%;
+  width: 95%;
+  visibility: ${props => props.visible};
 `;
 
 class Edit extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      e_back: "transparent",
+      e_visible: "hidden",
+      p_visible: "visible"
+    };
+  }
   render() {
     const { projectname, id, userid } = this.props;
     return (
@@ -66,15 +75,18 @@ class Edit extends React.Component {
           >
             <ProjectContainer
               id={`project${id}`}
-              onClick={() => this._click(id)}
+              onClick={() => this._click(id, projectname)}
+              visible={this.state.p_visible}
             >
               <ProjectName id={`name${id}`}>{projectname}</ProjectName>
               <ProjectEdit
+                defaultValue={projectname}
                 id={`edit${id}`}
                 onKeyDown={e => this._press(e, id)}
-                onKeyUp={e => this._height(e, id)}
-                defaultValue={projectname}
-                onBlur={e => this._focusout(e, id, projectname)}
+                onKeyUpCapture={e => this._height(e, id)}
+                onBlurCapture={e => this._focusout(e, id, projectname)}
+                inputback={this.state.e_back}
+                inputvisible={this.state.e_visible}
               />
               <Button id={`button${id}`} type="submit">
                 확인
@@ -85,12 +97,15 @@ class Edit extends React.Component {
       </Mutation>
     );
   }
-  _click = key => {
-    const edit = document.getElementById(`edit${key}`);
-    document.getElementById(`project${key}`).style.visibility = "hidden";
-    edit.style.background = "white";
-    edit.style.visibility = "visible";
-    edit.focus();
+  _click = (key, projectname) => {
+    this.setState({
+      p_visible: "hidden",
+      e_back: "white",
+      e_visible: "visible"
+    });
+    window.setTimeout(() => {
+      document.getElementById(`edit${key}`).focus();
+    });
     return true;
   };
   _complete = (e, id, Edit_Project, userid) => {
@@ -112,28 +127,47 @@ class Edit extends React.Component {
   _press = (e, key) => {
     const code = e.which;
     const edit = document.getElementById(`edit${key}`);
-    document.getElementById(`main${key}`).style.height = edit.style.height;
+    const height = parseInt(edit.style.height) + 10 + "px";
+    document.getElementById(`main${key}`).style.height = height;
     if (code === 13) {
-      e.preventDefault();
-      document.getElementById(`button${key}`).click();
-      edit.style.visibility = "hidden";
-      document.getElementById(`project${key}`).style.visibility = "visible";
-      edit.style.background = "transparent";
-      return true;
+      if (edit.value === "") {
+        this.setState({
+          p_visible: "visible",
+          e_back: "transparent",
+          e_visible: "hidden"
+        });
+        return true;
+      } else {
+        e.preventDefault();
+        document.getElementById(`button${key}`).click();
+        this.setState({
+          p_visible: "visible",
+          e_back: "transparent",
+          e_visible: "hidden"
+        });
+        return true;
+      }
     }
     return true;
   };
 
   _height = (e, key) => {
     e.preventDefault();
-    document.getElementById(`main${key}`).style.height = e.target.style.height;
+    const height = parseInt(e.target.style.height) + 10 + "px";
+    document.getElementById(`main${key}`).style.height = height;
   };
+
   _focusout = (e, key, projectname) => {
     e.preventDefault();
-    e.target.style.visibility = "hidden";
-    e.target.value = projectname;
-    document.getElementById(`name${key}`).style.visibility = "visible";
-    document.getElementById(`project${key}`).style.visibility = "visible";
+    this.setState({
+      p_visible: "visible",
+      e_back: "transparent",
+      e_visible: "hidden"
+    });
+    const height = parseInt(e.target.style.height) + 10 + "px";
+    window.setTimeout(() => {
+      document.getElementById(`main${key}`).style.height = height;
+    });
   };
 }
 
