@@ -4,5 +4,5 @@
 
 ### Styled-Component
 
-(ex tello) detaillist하믄됨
+(ex tello) detaillist view
 
