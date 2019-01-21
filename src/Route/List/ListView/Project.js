@@ -31,7 +31,6 @@ const ProjectHeader = styled.div`
   flex: 0 0 auto;
   padding: 5px;
   position: relative;
-  height: 36px;
   padding-right: 50px;
   padding-bottom: 2px;
 `;
