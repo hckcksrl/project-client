@@ -9,7 +9,7 @@ const ClickAdd = styled.div`
   margin: 1%;
 `;
 const Add = styled.span`
-  color: white;
+  color: black;
 `;
 const AddDiv = styled.div`
   background-color: rgba(0, 0, 0, 0.12);
