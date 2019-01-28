@@ -2,8 +2,9 @@ import React from "react";
 import { Query } from "react-apollo";
 import { GetList } from "./queris";
 import styled from "styled-components";
-import HeaderPage from "./ListView/Header";
-import ProjectPage from "./ListView/Project";
+import HeaderPage from "./ListView/Header/Header";
+import ProjectPage from "./ListView/Project/Project";
+import "./list.css";
 
 const Main = styled.div`
   width: 100%;
