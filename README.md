@@ -2,7 +2,7 @@
 
 ## React , Apollo Client , Grpahql
 
-### Styled-Component
+### Styled-Component => Scss
 
 (ex tello) detaillist view
 
