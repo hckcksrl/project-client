@@ -11,7 +11,7 @@ class HeaderPage extends React.Component {
         <div className="Header">
           <div className="Header-center">
             <div className="Header-wrap">
-              <a className="Name">{email}</a>
+              <span className="Name">{email}</span>
             </div>
             <div>
               <Logout />
