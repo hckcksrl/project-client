@@ -1,109 +1,100 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Mutation } from "react-apollo";
 import { CreateSub } from "./queries";
-import styled from "styled-components";
-import PropTypes from "prop-types";
 import { GetList } from "../../List/queris";
+import "./CreateSubProject.scss";
 
-const AddArea = styled.textarea`
-  background: white;
-  box-sizing: border-box;
-  border: 1px solid transparent;
-  border-radius: 3px;
-  width: 95.5%;
-  position: absolute;
-  left: 8px;
-  font-size: 15px;
-  text-align: start;
-  visibility: visible;
-  white-space: pre-line;
-  resize: none;
-  z-index: 1;
-  height: 50px;
-`;
-
-const AddDiv = styled.div`
-  display: none;
-  padding-bottom: 6px;
-`;
-
-const Div = styled.div`
-  height: 56px;
-`;
-
-const Form = styled.form``;
-
-const Button = styled.button`
-  visibility: hidden;
-  float: right;
-`;
 class CreateSubProject extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      add_sub: "add-sub"
+    };
+  }
   render() {
-    const { projectid, userid } = this.props;
+    const { projectid } = this.props;
     return (
-      <AddDiv id={`area${projectid}`}>
-        <Div>
-          <Mutation mutation={CreateSub}>
-            {Create_Sub => (
-              <Form
-                onSubmit={e => {
-                  this._complete(e, projectid, Create_Sub, userid);
-                }}
-              >
-                <AddArea
+      <div
+        className={this.state.add_sub}
+        onClick={() => this._click(projectid)}
+      >
+        <div className="add-sub-wrap" id={`addwrap${projectid}`}>
+          <div className="add-sub-name">
+            <span>Add SubProject</span>
+          </div>
+        </div>
+        <div className="add-sub-div" id={`area${projectid}`}>
+          <div className="add-sub-txt-wrap">
+            <Mutation mutation={CreateSub}>
+              {Create_Sub => (
+                <textarea
+                  className="add-sub-area"
                   id={`txtarea${projectid}`}
-                  onKeyDown={e => this._press(e, projectid)}
-                  placeholder="Enter Submit"
+                  onKeyDown={e => this._press(e, Create_Sub)}
                   onBlur={e => this._focusout(e, projectid)}
+                  placeholder="Enter Submit"
                 />
-                <Button id={`create_sub_btn${projectid}`} type="submit">
-                  확인
-                </Button>
-              </Form>
-            )}
-          </Mutation>
-        </Div>
-      </AddDiv>
+              )}
+            </Mutation>
+          </div>
+        </div>
+      </div>
     );
   }
-  _complete = (e, projectid, Create_Sub, userid) => {
-    e.preventDefault();
-    const subproject = document.getElementById(`txtarea${projectid}`).value;
-    if (subproject !== "") {
-      Create_Sub({
-        refetchQueries: [
-          {
-            query: GetList,
-            variables: { id: userid }
-          }
-        ],
-        variables: {
-          subprojectname: subproject,
-          projectid: projectid
-        }
-      });
-      document.getElementById(`txtarea${projectid}`).value = "";
-    } else {
-      console.log("error");
-    }
+  _click = id => {
+    this.setState({
+      add_sub: "add-sub hidden"
+    });
+    window.setTimeout(() => {
+      document.getElementById(`txtarea${id}`).focus();
+    });
   };
-  _press = (e, key) => {
+  _complete = (e, Create_Sub, subproject) => {
+    e.preventDefault();
+    const { projectid, userid } = this.props;
+    Create_Sub({
+      refetchQueries: [
+        {
+          query: GetList,
+          variables: { id: userid }
+        }
+      ],
+      variables: {
+        subprojectname: subproject,
+        projectid: projectid
+      }
+    });
+    return true;
+  };
+  _press = (e, Create_Sub) => {
     const code = e.which;
+    const data = e.target.value.trim();
     if (code === 13) {
-      e.preventDefault();
-      document.getElementById(`create_sub_btn${key}`).click();
-      document.getElementById(`area${key}`).style.display = "none";
-      document.getElementById(`addwrap${key}`).style.display = "block";
-      return true;
+      if (data === "") {
+        this.setState({
+          add_sub: "add-sub"
+        });
+        e.target.value = "";
+        return true;
+      } else {
+        this._complete(e, Create_Sub, data);
+        this.setState({
+          add_sub: "add-sub"
+        });
+        e.target.value = "";
+        return true;
+      }
     }
     return true;
   };
 
-  _focusout = (e, id) => {
+  _focusout = e => {
     e.preventDefault();
-    document.getElementById(`area${id}`).style.display = "none";
-    document.getElementById(`addwrap${id}`).style.display = "block";
-    document.getElementById(`txtarea${id}`).value = "";
+    this.setState({
+      add_sub: "add-sub"
+    });
+    e.target.value = "";
   };
 }
 
