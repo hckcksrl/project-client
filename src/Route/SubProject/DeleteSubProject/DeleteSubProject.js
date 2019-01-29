@@ -1,54 +1,48 @@
 import React from "react";
 import { DeleteSub } from "./queries";
-import styled from "styled-components";
 import PropTypes from "prop-types";
 import { Mutation } from "react-apollo";
 import { GetList } from "../../List/queris";
+import "./DeleteSubProject.scss";
 
-const Delete = styled.button`
-  background-color: transparent;
-  background-clip: padding-box;
-  background-origin: padding-box;
-  border-radius: 3px;
-  border: none;
-  padding: 4px;
-  position: absolute;
-  right: 2px;
-  top: 4px;
-  z-index: 40;
-  text-align: center;
-  cursor: pointer;
-  visibility: hidden;
-`;
-const DeleteDiv = styled.div``;
-const Form = styled.form``;
 class DeleteSubProject extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      del_btn_class: "delete-sub"
+    };
+  }
   render() {
-    const { subprojectid, userid } = this.props;
+    const { subprojectid } = this.props;
     return (
-      <DeleteDiv>
+      <div className="delete-sub-div">
         <Mutation mutation={DeleteSub}>
           {Delete_Sub => (
-            <Form
-              onSubmit={e => {
-                e.preventDefault();
-                Delete_Sub({
-                  refetchQueries: [
-                    { query: GetList, variables: { id: userid } }
-                  ],
-                  variables: { id: subprojectid }
-                });
-              }}
-            >
-              <Delete id={`sub_del${subprojectid}`} type="submit">
+            <div className="delete-sub-wrap">
+              <button
+                className={this.state.del_btn_class}
+                onClick={e => {
+                  this._Delete(e, Delete_Sub);
+                }}
+                id={`sub_del${subprojectid}`}
+                type="submit"
+              >
                 삭제
-              </Delete>
-            </Form>
+              </button>
+            </div>
           )}
         </Mutation>
-      </DeleteDiv>
+      </div>
     );
   }
+  _Delete = (e, Delete_Sub) => {
+    const { subprojectid, userid } = this.props;
+    e.preventDefault();
+    Delete_Sub({
+      refetchQueries: [{ query: GetList, variables: { id: userid } }],
+      variables: { id: subprojectid }
+    });
+  };
 }
 
 DeleteSubProject.propTypes = {
