@@ -1,15 +1,9 @@
 import React from "react";
 import { Query } from "react-apollo";
 import { GetList } from "./queris";
-import styled from "styled-components";
 import HeaderPage from "./ListView/Header/Header";
 import ProjectPage from "./ListView/Project/Project";
-import "./list.css";
-
-const Main = styled.div`
-  width: 100%;
-  height: 100%;
-`;
+import "./list.scss";
 
 export default class List extends React.Component {
   constructor(props) {
@@ -34,10 +28,10 @@ export default class List extends React.Component {
           const result = data.GetUser.user;
           const project = result.project;
           return (
-            <Main>
+            <div className="main-wrap">
               <HeaderPage email={result.email} />
               <ProjectPage project={project} history={history} id={uid} />
-            </Main>
+            </div>
           );
         }}
       </Query>
