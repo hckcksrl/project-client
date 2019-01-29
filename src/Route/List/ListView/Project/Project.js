@@ -1,11 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
-import SubProjectPage from "../SubProject";
-import AddSubPage from "../AddSuPage";
-import AddPage from "../AddPage";
+import SubProjectPage from "../SubProject/SubProject";
 import Edit from "../../../Project/EditProject";
 import DeleteProject from "../../../Project/DeleteProject/DeleteProject";
 import "./project.scss";
+import CreateSubProject from "../../../SubProject/CreateSubProject";
+import CreateProjects from "../../../Project/CreateProject";
 
 class ProjectPage extends React.Component {
   constructor() {
@@ -39,11 +39,11 @@ class ProjectPage extends React.Component {
                 projectid={data.id}
                 userid={id}
               />
-              <AddSubPage projectid={data.id} />
+              <CreateSubProject projectid={data.id} userid={id} />
             </div>
           );
         })}
-        <AddPage userid={id} />
+        <CreateProjects userid={id} />
       </main>
     );
   }
