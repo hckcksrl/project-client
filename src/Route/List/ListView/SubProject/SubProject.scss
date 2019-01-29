@@ -1,0 +1,41 @@
+.subproject {
+  margin-bottom: 0;
+  padding: 0 8px;
+  min-height: 0;
+  z-index: 0;
+}
+
+.subproject-name {
+  word-wrap: break-word;
+  color: black;
+  margin-top: 2px;
+}
+
+.subproject-div {
+  width: 83%;
+  padding: 5px 0 5px 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.subproject-main {
+  background-color: #fff;
+  border-radius: 3px;
+  box-shadow: 0 1px 0 rgba(9, 45, 66, 0.25);
+  cursor: pointer;
+  margin-bottom: 8px;
+  width: 100%;
+  min-height: 20px;
+  display: flex;
+  flex-direction: row;
+  &:hover {
+    div {
+      div {
+        button {
+          display: block;
+        }
+      }
+    }
+  }
+}
