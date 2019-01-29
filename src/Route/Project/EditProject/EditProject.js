@@ -15,7 +15,7 @@ class Edit extends React.Component {
     };
   }
   render() {
-    const { projectname, id, userid } = this.props;
+    const { projectname, id } = this.props;
     return (
       <Mutation mutation={EditProject}>
         {Edit_Project => (
@@ -24,14 +24,15 @@ class Edit extends React.Component {
             id={`project${id}`}
             onClick={e => this._click(e, id)}
           >
-            <a className={this.state.name_class}>{projectname}</a>
+            <span className={this.state.name_class} id={`name${id}`}>
+              {projectname}
+            </span>
             <TextareaAutosize
               className={this.state.edit_class}
               defaultValue={projectname}
               id={`edit${id}`}
-              onKeyDown={e => this._press(e, id, Edit_Project, userid)}
+              onKeyDown={e => this._press(e, Edit_Project)}
               onBlurCapture={e => this._focusout(e)}
-              onSubmit={e => this._complete(e, id, Edit_Project, userid)}
             />
           </div>
         )}
@@ -48,9 +49,9 @@ class Edit extends React.Component {
     });
     return true;
   };
-  _complete = (e, id, Edit_Project, userid) => {
+  _complete = (e, Edit_Project, project) => {
     e.preventDefault();
-    const project = e.target.value;
+    const { id, userid } = this.props;
     Edit_Project({
       refetchQueries: [
         {
@@ -64,14 +65,21 @@ class Edit extends React.Component {
       }
     });
   };
-  _press = (e, id, Edit_Project, userid) => {
+  _press = (e, Edit_Project) => {
     const code = e.which;
+    const { projectname } = this.props;
+    const data = e.target.value.trim();
     if (code === 13) {
-      if (e.target.value === "") {
+      if (data === "") {
+        this.setState({
+          name_class: "project-name",
+          edit_class: "project-edit"
+        });
+        e.target.value = projectname;
         return true;
       } else {
         e.preventDefault();
-        this._complete(e, id, Edit_Project, userid);
+        this._complete(e, Edit_Project, data);
         this.setState({
           name_class: "project-name",
           edit_class: "project-edit"
@@ -83,11 +91,13 @@ class Edit extends React.Component {
     return true;
   };
   _focusout = e => {
+    const { projectname } = this.props;
     e.preventDefault();
     this.setState({
       name_class: "project-name",
       edit_class: "project-edit"
     });
+    e.target.value = projectname;
   };
 }
 
