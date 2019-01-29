@@ -9,11 +9,11 @@ class DeleteProject extends React.Component {
   render() {
     const { projectid } = this.props;
     return (
-      <div className="delete-div">
+      <div className="delete-project-div">
         <Mutation mutation={DelProject}>
           {Delete_Project => (
             <button
-              className="delete"
+              className="delete-project"
               onClick={e => this._delete(e, Delete_Project)}
               id={`p-del${projectid}`}
               type="submit"
