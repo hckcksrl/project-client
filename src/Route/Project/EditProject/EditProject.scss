@@ -2,7 +2,6 @@
   cursor: pointer;
   height: 100%;
   width: 100%;
-  visibility: visible;
 }
 
 .project-edit {
@@ -35,6 +34,7 @@
   white-space: pre-wrap;
   display: block;
   cursor: pointer;
+  z-index: 0;
   &.hidden {
     display: none;
   }
