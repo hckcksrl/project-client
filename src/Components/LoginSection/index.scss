@@ -1,0 +1,18 @@
+.body {
+  height: 100%;
+  width: 100%;
+}
+
+.content {
+  min-height: 970px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.section {
+  min-height: 810px;
+  width: 100%;
+  height: auto;
+  position: relative;
+}
