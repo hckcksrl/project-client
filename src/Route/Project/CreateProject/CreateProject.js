@@ -15,11 +15,7 @@ class CreateProjects extends React.Component {
   render() {
     return (
       <div className={this.state.add_project} id="add">
-        <div
-          className="click-add"
-          id={`ClickAdd`}
-          onClick={e => this._Click(e)}
-        >
+        <div className="click-add" id={`ClickAdd`} onClick={this._Click}>
           <span>Add Project</span>
         </div>
         <div className="add-project-div-wrap">
@@ -30,13 +26,13 @@ class CreateProjects extends React.Component {
                   <input
                     id="create-project"
                     type="text"
-                    onKeyDown={e => this._press(e)}
+                    onKeyDown={e => this._press(e, Create_Project)}
                     placeholder="Enter Create Project"
                     onBlur={e => this._focusout(e)}
                   />
                   <button
                     id="create-project-btn"
-                    onClick={e => this._Create(e, Create_Project)}
+                    onMouseDown={e => this._Create(e, Create_Project)}
                     type="submit"
                   >
                     Create Project
@@ -49,7 +45,7 @@ class CreateProjects extends React.Component {
       </div>
     );
   }
-  _Click = e => {
+  _Click = () => {
     this.setState({
       add_project: "add-project-wrap click"
     });
@@ -74,7 +70,7 @@ class CreateProjects extends React.Component {
       }
     });
   };
-  _press = e => {
+  _press = (e, Create_Project) => {
     const code = e.which;
     const data = e.target.value.trim();
     if (code === 13) {
@@ -86,7 +82,7 @@ class CreateProjects extends React.Component {
         e.target.value = "";
         return false;
       } else {
-        document.getElementById("create-project-btn").click();
+        this._Create(e, Create_Project);
         this.setState({
           add_project: "add-project-wrap"
         });
