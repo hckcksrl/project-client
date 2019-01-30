@@ -32,7 +32,7 @@ class Edit extends React.Component {
               defaultValue={projectname}
               id={`edit${id}`}
               onKeyDown={e => this._press(e, Edit_Project)}
-              onBlurCapture={e => this._focusout(e)}
+              onBlur={e => this._focusout(e)}
             />
           </div>
         )}
@@ -84,20 +84,17 @@ class Edit extends React.Component {
           name_class: "project-name",
           edit_class: "project-edit"
         });
-        this._focusout(e);
         return true;
       }
     }
     return true;
   };
   _focusout = e => {
-    const { projectname } = this.props;
     e.preventDefault();
     this.setState({
       name_class: "project-name",
       edit_class: "project-edit"
     });
-    e.target.value = projectname;
   };
 }
 
