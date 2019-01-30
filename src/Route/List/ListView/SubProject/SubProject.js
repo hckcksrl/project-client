@@ -16,12 +16,11 @@ class SubProjectPage extends React.Component {
       <div className="subproject">
         {subproject.map(data => {
           return (
-            <div
+            <a
               className={this.state.sub_main_class}
               key={data.id}
               id={`sub_div${data.id}`}
-              onMouseOver={this._onMouse}
-              onMouseOut={e => this._outMouse(e, data.id)}
+              href="/aaa"
             >
               <div className="subproject-div">
                 <span className="subproject-name" id={`sub${data.id}`}>
@@ -29,15 +28,12 @@ class SubProjectPage extends React.Component {
                 </span>
               </div>
               <DeleteSubProject subprojectid={data.id} userid={userid} />
-            </div>
+            </a>
           );
         })}
       </div>
     );
   }
-  _outMouse = (e, id) => {
-    e.preventDefault();
-  };
 }
 
 SubProjectPage.propTypes = {
