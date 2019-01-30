@@ -8,7 +8,6 @@ class Container extends Component {
     return (
       <Query query={Is_Login}>
         {({ data }) => {
-          console.log(data.auth.isLoggedIn);
           return <App isLoggedIn={data.auth.isLoggedIn} />;
         }}
       </Query>
