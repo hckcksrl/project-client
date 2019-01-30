@@ -1,11 +1,10 @@
-import React from "react";
+import React, { Component } from "react";
 import { Query } from "react-apollo";
 import { GetList } from "./queris";
-import HeaderPage from "./ListView/Header/Header";
 import ProjectPage from "./ListView/Project/Project";
 import "./list.scss";
 
-export default class List extends React.Component {
+export default class List extends Component {
   constructor(props) {
     super(props);
     if (!props.match.params.userid) {
@@ -29,7 +28,6 @@ export default class List extends React.Component {
           const project = result.project;
           return (
             <div className="main-wrap">
-              <HeaderPage email={result.email} />
               <ProjectPage project={project} history={history} id={uid} />
             </div>
           );
