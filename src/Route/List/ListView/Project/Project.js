@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
 import SubProjectPage from "../SubProject/SubProject";
 import Edit from "../../../Project/EditProject";
@@ -7,7 +7,7 @@ import "./project.scss";
 import CreateSubProject from "../../../SubProject/CreateSubProject";
 import CreateProjects from "../../../Project/CreateProject";
 
-class ProjectPage extends React.Component {
+class ProjectPage extends Component {
   constructor() {
     super();
     this.state = {
