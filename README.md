@@ -4,7 +4,7 @@
 
 ### Styled-Component => Scss Change
 
-onclick 이벤트로 특정element 안에 element 어케하는거지
+create detail 하면됨
 
 (ex tello) detaillist view
 
