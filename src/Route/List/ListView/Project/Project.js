@@ -17,7 +17,7 @@ class ProjectPage extends Component {
   render() {
     const { project, history, id } = this.props;
     return (
-      <main className="main">
+      <main className="main" ref={node => (this.input = node)}>
         {project.map(data => {
           return (
             <div className="project" key={data.id}>
