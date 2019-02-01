@@ -16,14 +16,13 @@ const LoginSection = () => {
           <Switch>
             <Route exact={true} path={"/"} component={Home} />
             <Route path={"/list/:userid"} component={List} />
+            {/* <Route path={"/:subproject"} component={Footer} /> */}
             <Redirect to={"/"} />
           </Switch>
         </section>
         <Footer />
       </div>
-      <div>
-        <Route path="/aaa" component={Overlay} />
-      </div>
+      <Overlay />
     </div>
   );
 };
