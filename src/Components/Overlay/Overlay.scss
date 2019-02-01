@@ -1,0 +1,46 @@
+.pop-main {
+  display: none;
+  height: 100%;
+  left: 0;
+  overflow-y: auto;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 20;
+}
+
+.pop-up-wrap {
+  align-items: flex-start;
+  background: white;
+  border-radius: 3px;
+  box-shadow: 0 8px 16px -4px rgba(9, 45, 66, 0.25),
+    0 0 0 1px rgba(9, 45, 66, 0.08);
+  overflow: hidden;
+  position: absolute;
+  width: 50%;
+  height: 50%;
+  z-index: 70;
+  left: 0;
+  top: 0;
+}
+.pop-up {
+  color: #17394d;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 400;
+}
+.focus-dommy {
+  width: 1px;
+  height: 0;
+  display: block;
+  overflow: hidden;
+  outline: none;
+}
+
+.details {
+  color: #17394d;
+  font-family: Helvetica Neue, Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 400;
+}
