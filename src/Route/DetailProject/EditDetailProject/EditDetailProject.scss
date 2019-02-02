@@ -1,0 +1,36 @@
+.detail-list-main {
+  height: 100%;
+  width: 75%;
+  .detail-list {
+    height: 100%;
+    width: 100%;
+    .detail-name-span {
+      font-size: 15px;
+      cursor: pointer;
+      box-sizing: border-box;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      margin-block-end: 0;
+      margin-block-start: 0;
+      width: 100%;
+      display: block;
+      &.hidden {
+        display: none;
+      }
+    }
+    .edit-detail-input {
+      display: none;
+      width: 100%;
+      padding: 0;
+      border-width: 0;
+      font-size: 15px;
+      resize: none;
+      box-sizing: border-box;
+      line-height: 20px;
+      white-space: pre-line;
+      &.block {
+        display: block;
+      }
+    }
+  }
+}
