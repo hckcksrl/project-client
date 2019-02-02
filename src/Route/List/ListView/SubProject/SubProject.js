@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import DeleteSubProject from "../../../SubProject/DeleteSubProject";
 import "./SubProject.scss";
-import CreateDetail from "../../../DetailProject/CreateDetailProject";
+import DetailView from "../Detail";
 
 class SubProjectPage extends React.Component {
   constructor() {
@@ -21,9 +21,11 @@ class SubProjectPage extends React.Component {
               className={this.state.sub_main_class}
               key={data.id}
               id={`sub_div${data.id}`}
-              onClick={e => this._click(e, data.detaillist)}
             >
-              <div className="subproject-div">
+              <div
+                className="subproject-div"
+                onClick={e => this._click(e, data)}
+              >
                 <span className="subproject-name" id={`sub${data.id}`}>
                   {data.subprojectname}
                 </span>
@@ -35,13 +37,14 @@ class SubProjectPage extends React.Component {
       </div>
     );
   }
-  _click = (e, detail) => {
+  _click = (e, data) => {
+    const { userid } = this.props;
     const position = e.target.getBoundingClientRect();
     const pop_up = document.getElementsByClassName("pop-up-wrap")[0];
     document.getElementsByClassName("pop-main")[0].style.display = "block";
     pop_up.style.left = `${position.left}px`;
     pop_up.style.top = `${position.top}px`;
-    CreateDetail(detail);
+    DetailView(data, userid);
   };
 }
 SubProjectPage.propTypes = {
