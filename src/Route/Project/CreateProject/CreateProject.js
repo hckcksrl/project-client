@@ -54,7 +54,6 @@ class CreateProjects extends React.Component {
     });
   };
   _Create = (e, Create_Project) => {
-    console.log("a");
     e.preventDefault();
     const { userid } = this.props;
     const project = document.getElementById("create-project").value;
