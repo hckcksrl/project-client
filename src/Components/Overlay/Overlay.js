@@ -7,7 +7,6 @@ const Overlay = () => {
     <div className="pop-main" onClick={e => FocusOut(e)}>
       <div className="pop-up-wrap" id="pop">
         <div className="pop-up">
-          <div className="focus-dummy" />
           <div className="details" />
         </div>
       </div>
