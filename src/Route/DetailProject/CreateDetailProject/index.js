@@ -1,2 +1,2 @@
-import CreateDetail from "./CreateDetail";
-export default CreateDetail;
+import CreateDetailProject from "./CreateDetailProject";
+export default CreateDetailProject;
