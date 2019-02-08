@@ -7,42 +7,55 @@ import { ApolloProvider, Query } from "react-apollo";
 import client from "../../../../apollo";
 import DeleteDetailProject from "../../../DetailProject/DeleteDetailProject";
 import EditDetailProject from "../../../DetailProject/EditDetailProject";
-import { GetDetail } from "./queries";
+import EditSubProject from "../../../SubProject/EditSubProject";
+import { GetSub, GetDetail } from "../../queris";
 
-const CreateDetailView = subproject => {
+const CreateDetailView = (subprojectid, userid) => {
   const create = (
-    <div className="detail-wrap">
-      <div className="header-subproject">
-        <span>{subproject.subprojectname}</span>
-      </div>
-      <div className="detail-main">
-        <ul className="detail-ul">
-          <Query query={GetDetail} variables={{ subprojectid: subproject.id }}>
-            {({ loading, data, error }) => {
-              if (loading) return "loading";
-              if (error) return "error";
-              return data.GetDetailList.detail.map(details => (
-                <li key={details.id} className="detailname">
-                  <div className="detail-list-wrap">
-                    <EditDetailProject
-                      details={details}
-                      subprojectid={subproject.id}
-                    />
-                    <DeleteDetailProject
-                      id={details.id}
-                      subprojectid={subproject.id}
-                    />
-                  </div>
-                </li>
-              ));
-            }}
-          </Query>
-        </ul>
-      </div>
-      <div className="detail-footer">
-        <CreateDetailProject subprojectid={subproject.id} />
-      </div>
-    </div>
+    <Query query={GetSub} variables={{ id: subprojectid }}>
+      {({ loading, error, data }) => {
+        if (loading) return "loading";
+        if (error) return "error";
+        const subproject = data.GetSubProject.subproject;
+        return (
+          <div className="detail-wrap">
+            <div className="header-subproject">
+              <EditSubProject subproject={subproject} userid={userid} />
+            </div>
+            <div className="detail-main">
+              <ul className="detail-ul">
+                <Query
+                  query={GetDetail}
+                  variables={{ subprojectid: subproject.id }}
+                >
+                  {({ loading, data, error }) => {
+                    if (loading) return "loading";
+                    if (error) return "error";
+                    return data.GetDetailList.detail.map(details => (
+                      <li key={details.id} className="detailname">
+                        <div className="detail-list-wrap">
+                          <EditDetailProject
+                            details={details}
+                            subprojectid={subproject.id}
+                          />
+                          <DeleteDetailProject
+                            id={details.id}
+                            subprojectid={subproject.id}
+                          />
+                        </div>
+                      </li>
+                    ));
+                  }}
+                </Query>
+              </ul>
+            </div>
+            <div className="detail-footer">
+              <CreateDetailProject subprojectid={subprojectid} />
+            </div>
+          </div>
+        );
+      }}
+    </Query>
   );
   ReactDOM.render(
     <ApolloProvider client={client}>{create}</ApolloProvider>,
@@ -51,7 +64,8 @@ const CreateDetailView = subproject => {
 };
 
 CreateDetailView.propTypes = {
-  subproject: PropTypes.object.isRequired
+  subprojectid: PropTypes.number.isRequired,
+  userid: PropTypes.number.isRequired
 };
 
 export default CreateDetailView;
