@@ -12,27 +12,75 @@ class CreateSubProject extends React.Component {
       add_sub: "add-sub"
     };
   }
+
+  handleClick = () => {
+    this.setState({
+      add_sub: "add-sub hidden"
+    });
+  };
+
+  blur = () => {
+    this.setState({
+      add_sub: "add-sub"
+    });
+    this.textarea.value = null;
+  };
+
+  submit = (e, Create_Sub) => {
+    const { projectid, userid } = this.props;
+    const code = e.which;
+    const subproject = e.target.value.trim();
+    if (code === 13) {
+      e.preventDefault();
+      if (subproject) {
+        Create_Sub({
+          refetchQueries: [
+            {
+              query: GetList,
+              variables: { id: userid }
+            }
+          ],
+          variables: {
+            subprojectname: subproject,
+            projectid: projectid
+          }
+        });
+        return true;
+      } else {
+        this.blur();
+        return true;
+      }
+    }
+    return true;
+  };
+
+  componentDidUpdate() {
+    this.textarea.focus();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      add_sub: "add-sub"
+    });
+  }
+
   render() {
-    const { projectid } = this.props;
     return (
-      <div
-        className={this.state.add_sub}
-        onClick={() => this._click(projectid)}
-      >
-        <div className="add-sub-wrap" id={`addwrap${projectid}`}>
+      <div className={this.state.add_sub} onClick={this.handleClick}>
+        <div className="add-sub-wrap">
           <div className="add-sub-name">
             <span>Add SubProject</span>
           </div>
         </div>
-        <div className="add-sub-div" id={`area${projectid}`}>
+        <div className="add-sub-div">
           <div className="add-sub-txt-wrap">
             <Mutation mutation={CreateSub}>
               {Create_Sub => (
                 <textarea
+                  ref={node => (this.textarea = node)}
                   className="add-sub-area"
-                  id={`txtarea${projectid}`}
-                  onKeyDown={e => this._press(e, Create_Sub)}
-                  onBlur={e => this._focusout(e, projectid)}
+                  onKeyPress={e => this.submit(e, Create_Sub)}
+                  onBlur={this.blur}
                   placeholder="Enter Submit"
                 />
               )}
@@ -42,60 +90,6 @@ class CreateSubProject extends React.Component {
       </div>
     );
   }
-  _click = id => {
-    this.setState({
-      add_sub: "add-sub hidden"
-    });
-    window.setTimeout(() => {
-      document.getElementById(`txtarea${id}`).focus();
-    });
-  };
-  _complete = (e, Create_Sub, subproject) => {
-    e.preventDefault();
-    const { projectid, userid } = this.props;
-    Create_Sub({
-      refetchQueries: [
-        {
-          query: GetList,
-          variables: { id: userid }
-        }
-      ],
-      variables: {
-        subprojectname: subproject,
-        projectid: projectid
-      }
-    });
-    return true;
-  };
-  _press = (e, Create_Sub) => {
-    const code = e.which;
-    const data = e.target.value.trim();
-    if (code === 13) {
-      if (data === "") {
-        this.setState({
-          add_sub: "add-sub"
-        });
-        e.target.value = "";
-        return true;
-      } else {
-        this._complete(e, Create_Sub, data);
-        this.setState({
-          add_sub: "add-sub"
-        });
-        e.target.value = "";
-        return true;
-      }
-    }
-    return true;
-  };
-
-  _focusout = e => {
-    e.preventDefault();
-    this.setState({
-      add_sub: "add-sub"
-    });
-    e.target.value = "";
-  };
 }
 
 CreateSubProject.propTypes = {
