@@ -14,88 +14,84 @@ class Edit extends React.Component {
       edit_class: "project-edit"
     };
   }
-  render() {
-    const { projectname, id } = this.props;
-    return (
-      <Mutation mutation={EditProject}>
-        {Edit_Project => (
-          <div
-            className="project-container"
-            id={`project${id}`}
-            onClick={e => this._click(e, id)}
-          >
-            <span className={this.state.name_class} id={`name${id}`}>
-              {projectname}
-            </span>
-            <TextareaAutosize
-              className={this.state.edit_class}
-              defaultValue={projectname}
-              id={`edit${id}`}
-              onKeyDown={e => this._press(e, Edit_Project)}
-              onBlur={e => this._focusout(e)}
-            />
-          </div>
-        )}
-      </Mutation>
-    );
-  }
-  _click = (e, id) => {
+
+  handleClick = () => {
     this.setState({
       name_class: "project-name hidden",
       edit_class: "project-edit edit"
     });
-    window.setTimeout(() => {
-      document.getElementById(`edit${id}`).focus();
-    });
     return true;
   };
-  _complete = (e, Edit_Project, project) => {
-    e.preventDefault();
-    const { id, userid } = this.props;
-    Edit_Project({
-      refetchQueries: [
-        {
-          query: GetList,
-          variables: { id: userid }
-        }
-      ],
-      variables: {
-        projectname: project,
-        id: id
-      }
-    });
-  };
-  _press = (e, Edit_Project) => {
-    const code = e.which;
-    const { projectname } = this.props;
-    const data = e.target.value.trim();
-    if (code === 13) {
-      if (data === "") {
-        this.setState({
-          name_class: "project-name",
-          edit_class: "project-edit"
-        });
-        e.target.value = projectname;
-        return true;
-      } else {
-        e.preventDefault();
-        this._complete(e, Edit_Project, data);
-        this.setState({
-          name_class: "project-name",
-          edit_class: "project-edit"
-        });
-        return true;
-      }
-    }
-    return true;
-  };
-  _focusout = e => {
-    e.preventDefault();
+
+  blur = () => {
     this.setState({
       name_class: "project-name",
       edit_class: "project-edit"
     });
   };
+
+  submit = (e, Edit_Project) => {
+    const code = e.which;
+    const { id, userid } = this.props;
+    const project = e.target.value.trim();
+    if (code === 13) {
+      e.preventDefault();
+      if (project) {
+        Edit_Project({
+          refetchQueries: [
+            {
+              query: GetList,
+              variables: { id: userid }
+            }
+          ],
+          variables: {
+            projectname: project,
+            id: id
+          }
+        });
+        return true;
+      } else {
+        this.blur();
+        return false;
+      }
+    }
+    return true;
+  };
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      name_class: "project-name",
+      edit_class: "project-edit"
+    });
+  }
+
+  componentDidUpdate() {
+    const { projectname } = this.props;
+    this.textarea.value = projectname;
+    this.textarea.focus();
+  }
+
+  render() {
+    const { projectname } = this.props;
+    return (
+      <div className="project-header">
+        <Mutation mutation={EditProject}>
+          {Edit_Project => (
+            <div className="project-container" onClick={this.handleClick}>
+              <span className={this.state.name_class}>{projectname}</span>
+              <TextareaAutosize
+                inputRef={tag => (this.textarea = tag)}
+                className={this.state.edit_class}
+                defaultValue={projectname}
+                onKeyPress={e => this.submit(e, Edit_Project)}
+                onBlur={this.blur}
+              />
+            </div>
+          )}
+        </Mutation>
+      </div>
+    );
+  }
 }
 
 Edit.propTypes = {
