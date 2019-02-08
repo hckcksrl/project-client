@@ -4,14 +4,7 @@
 }
 
 .header-subproject {
-  height: 50px;
-  text-align: center;
-  font-size: 20px;
-  font-weight: 700;
-  line-height: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  min-height: 50px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.0975);
   margin: 0 10px;
 }
