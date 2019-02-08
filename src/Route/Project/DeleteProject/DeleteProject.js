@@ -6,26 +6,7 @@ import { GetList } from "../../List/queris";
 import "./DeleteProject.scss";
 
 class DeleteProject extends React.Component {
-  render() {
-    const { projectid } = this.props;
-    return (
-      <div className="delete-project-div">
-        <Mutation mutation={DelProject}>
-          {Delete_Project => (
-            <button
-              className="delete-project"
-              onClick={e => this._delete(e, Delete_Project)}
-              id={`p-del${projectid}`}
-              type="submit"
-            >
-              삭제
-            </button>
-          )}
-        </Mutation>
-      </div>
-    );
-  }
-  _delete = (e, Delete_Project) => {
+  delete = (e, Delete_Project) => {
     const { projectid, userid } = this.props;
     e.preventDefault();
     Delete_Project({
@@ -40,6 +21,24 @@ class DeleteProject extends React.Component {
       }
     });
   };
+
+  render() {
+    return (
+      <div className="delete-project-div">
+        <Mutation mutation={DelProject}>
+          {Delete_Project => (
+            <button
+              className="delete-project"
+              onClick={e => this.delete(e, Delete_Project)}
+              type="submit"
+            >
+              삭제
+            </button>
+          )}
+        </Mutation>
+      </div>
+    );
+  }
 }
 
 DeleteProject.propTypes = {
