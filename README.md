@@ -4,7 +4,7 @@
 
 ### Styled-Component => Scss Change
 
-Edit SubProject하면됨
+Login Mutation 후 history.push 가 
 
 (ex tello) detaillist view
 
