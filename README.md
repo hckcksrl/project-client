@@ -4,7 +4,7 @@
 
 ### Styled-Component => Scss Change
 
-Login Mutation 후 history.push 가 
+history..... ㅜㅜ
 
 (ex tello) detaillist view
 
