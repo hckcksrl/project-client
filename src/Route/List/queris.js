@@ -24,3 +24,29 @@ export const GetList = gql`
     }
   }
 `;
+
+export const GetSub = gql`
+  query Get_Sub($id: Int!) {
+    GetSubProject(id: $id) {
+      result
+      error
+      subproject {
+        id
+        subprojectname
+      }
+    }
+  }
+`;
+
+export const GetDetail = gql`
+  query Get_Detail($subprojectid: Int!) {
+    GetDetailList(subprojectid: $subprojectid) {
+      result
+      error
+      detail {
+        id
+        detailname
+      }
+    }
+  }
+`;
