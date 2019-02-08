@@ -1,13 +1,7 @@
-.LogoutWrap {
-  justify-content: flex-end;
-  flex-direction: row;
-  display: flex;
-  flex-wrap: wrap;
-}
-
 .logout_btn {
   font-size: 18px;
   line-height: 30px;
   font-weight: 600;
   border: 0;
+  cursor: pointer;
 }
