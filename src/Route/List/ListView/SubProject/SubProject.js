@@ -11,44 +11,45 @@ class SubProjectPage extends React.Component {
       sub_main_class: "subproject-main"
     };
   }
-  render() {
-    const { subproject, userid } = this.props;
-    return (
-      <div className="subproject">
-        {subproject.map(data => {
-          return (
-            <div
-              className={this.state.sub_main_class}
-              key={data.id}
-              id={`sub_div${data.id}`}
-            >
-              <div
-                className="subproject-div"
-                onClick={e => this._click(e, data)}
-              >
-                <span className="subproject-name" id={`sub${data.id}`}>
-                  {data.subprojectname}
-                </span>
-              </div>
-              <DeleteSubProject subprojectid={data.id} userid={userid} />
-            </div>
-          );
-        })}
-      </div>
-    );
-  }
-  _click = (e, data) => {
+
+  handleClick = (e, subprojectid) => {
     const { userid } = this.props;
     const position = e.target.getBoundingClientRect();
-    const pop_up = document.getElementsByClassName("pop-up-wrap")[0];
+    const pop_up = document.getElementsByClassName("details")[0];
     document.getElementsByClassName("pop-main")[0].style.display = "block";
     pop_up.style.left = `${position.left}px`;
     pop_up.style.top = `${position.top}px`;
-    DetailView(data, userid);
+    DetailView(subprojectid, userid);
   };
+
+  render() {
+    const { subproject, userid } = this.props;
+    return (
+      <ul className="subproject">
+        {subproject.map(data => {
+          return (
+            <li className={this.state.sub_main_class} key={data.id}>
+              <div className="subproject-wrap">
+                <div className="subproject-div">
+                  <span
+                    className="subproject-name"
+                    onClick={e => this.handleClick(e, data.id)}
+                  >
+                    {data.subprojectname}
+                  </span>
+                </div>
+                <DeleteSubProject subprojectid={data.id} userid={userid} />
+              </div>
+            </li>
+          );
+        })}
+      </ul>
+    );
+  }
 }
 SubProjectPage.propTypes = {
   subproject: PropTypes.array.isRequired,
+  projectid: PropTypes.number.isRequired,
   userid: PropTypes.number.isRequired
 };
 
