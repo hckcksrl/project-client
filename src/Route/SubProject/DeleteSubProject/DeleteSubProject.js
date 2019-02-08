@@ -13,7 +13,6 @@ class DeleteSubProject extends React.Component {
     };
   }
   render() {
-    const { subprojectid } = this.props;
     return (
       <div className="delete-sub-div">
         <Mutation mutation={DeleteSub}>
@@ -22,9 +21,8 @@ class DeleteSubProject extends React.Component {
               <button
                 className={this.state.del_btn_class}
                 onClick={e => {
-                  this._Delete(e, Delete_Sub);
+                  this._Delete(Delete_Sub);
                 }}
-                id={`sub_del${subprojectid}`}
                 type="submit"
               >
                 삭제
@@ -35,9 +33,8 @@ class DeleteSubProject extends React.Component {
       </div>
     );
   }
-  _Delete = (e, Delete_Sub) => {
+  _Delete = Delete_Sub => {
     const { subprojectid, userid } = this.props;
-    e.preventDefault();
     Delete_Sub({
       refetchQueries: [{ query: GetList, variables: { id: userid } }],
       variables: { id: subprojectid }
