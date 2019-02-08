@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Mutation } from "react-apollo";
 import { DeleteDetail } from "./queries";
 import "./DeleteDetailProject.scss";
-import { GetDetail } from "../../List/ListView/Detail/queries";
+import { GetDetail } from "../../List/queris";
 
 class DeleteDetailProject extends Component {
   render() {
