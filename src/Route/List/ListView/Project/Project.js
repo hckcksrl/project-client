@@ -8,29 +8,21 @@ import CreateSubProject from "../../../SubProject/CreateSubProject";
 import CreateProjects from "../../../Project/CreateProject";
 
 class ProjectPage extends Component {
-  constructor() {
-    super();
-    this.state = {
-      projectname: ""
-    };
-  }
   render() {
     const { project, history, id } = this.props;
     return (
-      <main className="main" ref={node => (this.input = node)}>
+      <main className="main">
         {project.map(data => {
           return (
             <div className="project" key={data.id}>
-              <div className="project-header-wrap" id={`main${data.id}`}>
+              <div className="project-header-wrap">
                 <div className="project-header-wrap-div">
-                  <div className="project-header">
-                    <Edit
-                      id={data.id}
-                      projectname={data.projectname}
-                      history={history}
-                      userid={id}
-                    />
-                  </div>
+                  <Edit
+                    id={data.id}
+                    projectname={data.projectname}
+                    history={history}
+                    userid={id}
+                  />
                   <DeleteProject projectid={data.id} userid={id} />
                 </div>
               </div>
