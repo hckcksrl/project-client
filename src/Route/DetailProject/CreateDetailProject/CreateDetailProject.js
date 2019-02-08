@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Mutation } from "react-apollo";
 import { CreateDetail } from "./queries";
 import "./CreateDetailProject.scss";
-import { GetDetail } from "../../List/ListView/Detail/queries";
+import { GetDetail } from "../../List/queris";
 
 class CreateDetailProject extends Component {
   constructor() {
