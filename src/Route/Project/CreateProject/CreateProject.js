@@ -4,6 +4,7 @@ import { CreateProject } from "./queries";
 import { GetList } from "../../List/queris";
 import PropTypes from "prop-types";
 import "./CreateProject.scss";
+import { IoIosAddCircleOutline } from "react-icons/io";
 
 class CreateProjects extends React.Component {
   constructor() {
@@ -12,92 +13,118 @@ class CreateProjects extends React.Component {
       add_project: "add-project-wrap"
     };
   }
-  render() {
-    return (
-      <div className={this.state.add_project} id="add">
-        <div className="click-add" id={`ClickAdd`} onClick={this._Click}>
-          <span>Add Project</span>
-        </div>
-        <div className="add-project-div-wrap">
-          <div className="ceate-project-wrap">
-            <Mutation mutation={CreateProject}>
-              {Create_Project => (
-                <div className="create-wrap">
-                  <input
-                    id="create-project"
-                    type="text"
-                    onKeyDown={e => this._press(e, Create_Project)}
-                    placeholder="Enter Create Project"
-                    onBlur={e => this._focusout(e)}
-                  />
-                  <button
-                    id="create-project-btn"
-                    onMouseDown={e => this._Create(e, Create_Project)}
-                    type="submit"
-                  >
-                    Create Project
-                  </button>
-                </div>
-              )}
-            </Mutation>
-          </div>
-        </div>
-      </div>
-    );
-  }
-  _Click = () => {
+
+  handleClick = () => {
     this.setState({
-      add_project: "add-project-wrap click"
+      add_project: "add-project-wrap block"
     });
-    window.setTimeout(() => {
-      document.getElementById("create-project").focus();
-    });
+    this.input.value = null;
   };
-  _Create = (e, Create_Project) => {
-    e.preventDefault();
-    const { userid } = this.props;
-    const project = document.getElementById("create-project").value;
-    Create_Project({
-      refetchQueries: [
-        {
-          query: GetList,
-          variables: { id: userid }
-        }
-      ],
-      variables: {
-        projectname: project
-      }
+
+  blur = e => {
+    this.setState({
+      add_project: "add-project-wrap"
     });
+    this.input.value = null;
   };
-  _press = (e, Create_Project) => {
+
+  submit = (e, Create_Project) => {
     const code = e.which;
-    const data = e.target.value.trim();
+    const { userid } = this.props;
+    const project = this.input.value;
     if (code === 13) {
       e.preventDefault();
-      if (data === "") {
-        this.setState({
-          add_project: "add-project-wrap"
+      if (project) {
+        Create_Project({
+          refetchQueries: [
+            {
+              query: GetList,
+              variables: { id: userid }
+            }
+          ],
+          variables: {
+            projectname: project
+          }
         });
-        e.target.value = "";
-        return false;
-      } else {
-        this._Create(e, Create_Project);
-        this.setState({
-          add_project: "add-project-wrap"
-        });
-        e.target.value = "";
         return true;
+      } else {
+        this.blur();
+        return false;
       }
     }
     return true;
   };
-  _focusout = e => {
+
+  handleSubmit = (e, Create_Project) => {
+    const { userid } = this.props;
+    const project = this.input.value;
     e.preventDefault();
+    if (project) {
+      Create_Project({
+        refetchQueries: [
+          {
+            query: GetList,
+            variables: { id: userid }
+          }
+        ],
+        variables: {
+          projectname: project
+        }
+      });
+      return true;
+    } else {
+      this.blur();
+      return false;
+    }
+  };
+
+  componentWillReceiveProps(nextProps) {
     this.setState({
       add_project: "add-project-wrap"
     });
-    e.target.value = "";
-  };
+  }
+
+  componentDidUpdate() {
+    this.input.focus();
+  }
+
+  render() {
+    return (
+      <div className="create-project-pop">
+        <div className={this.state.add_project}>
+          <div className="add-project-div-wrap">
+            <div className="ceate-project-wrap">
+              <Mutation mutation={CreateProject}>
+                {Create_Project => (
+                  <div className="create-wrap">
+                    <input
+                      ref={node => (this.input = node)}
+                      className="create-project"
+                      type="text"
+                      onKeyDown={e => this.submit(e, Create_Project)}
+                      placeholder="Enter Create Project"
+                      onBlur={e => this.blur(e)}
+                    />
+                    <button
+                      ref={node => (this.button = node)}
+                      className="create-project-btn"
+                      onMouseDown={e => this.handleSubmit(e, Create_Project)}
+                      type="submit"
+                    >
+                      Create Project
+                    </button>
+                  </div>
+                )}
+              </Mutation>
+            </div>
+          </div>
+        </div>
+        <div className="icon-div">
+          <IoIosAddCircleOutline className="icon" onClick={this.handleClick} />
+        </div>
+      </div>
+    );
+  }
 }
 CreateProjects.propTypes = {
   userid: PropTypes.number.isRequired
