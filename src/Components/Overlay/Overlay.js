@@ -1,26 +1,27 @@
-import React from "react";
+import React, { Component } from "react";
 import "./Overlay.scss";
 import ReactDOM from "react-dom";
 
-const Overlay = () => {
-  return (
-    <div className="pop-main" onClick={e => FocusOut(e)}>
-      <div className="pop-up-wrap" id="pop">
-        <div className="pop-up">
-          <div className="details" />
-        </div>
+class Overlay extends Component {
+  render() {
+    return (
+      <div
+        ref={node => (this.wrap = node)}
+        className="pop-main"
+        onClick={e => this.blur(e)}
+      >
+        <div ref={node => (this.details = node)} className="details" />
       </div>
-    </div>
-  );
-};
-const FocusOut = e => {
-  if (e.target === document.getElementsByClassName("pop-main")[0]) {
-    const element = null;
-    ReactDOM.render(element, document.getElementsByClassName("details")[0]);
-    document.getElementsByClassName("pop-main")[0].style.display = "none";
-  } else {
-    return true;
+    );
   }
-};
-
+  blur = e => {
+    if (e.target === this.wrap) {
+      const element = null;
+      ReactDOM.render(element, this.details);
+      this.wrap.style.display = "none";
+    } else {
+      return true;
+    }
+  };
+}
 export default Overlay;
