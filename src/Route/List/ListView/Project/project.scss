@@ -1,15 +1,13 @@
 .main {
-  flex-grow: 1;
-  order: 4;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: center;
 }
 
 .project {
-  background-color: #dfe3e6;
-  border-radius: 3px;
-  border: groove;
+  background-color: white;
+  border-radius: 5px;
+  border: none;
   box-shadow: 3px 3px 3px 3px rgba(84, 163, 209, 0.08);
   flex-direction: column;
   display: flex;
@@ -17,24 +15,29 @@
   position: relative;
   width: 300px;
   margin: 1%;
+  &:hover {
+    box-shadow: 3px 10px 20px 3px rgba(119, 115, 115, 0.3);
+  }
 }
 
 .project-header-wrap {
   display: flex;
-  width: 100%;
-  min-height: 36px;
+  min-height: 45px;
   flex-direction: row;
   justify-content: flex-start;
+  align-items: center;
+  margin: 5px 10px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.0975);
 }
 
 .project-header-wrap-div {
   display: flex;
   width: 100%;
-  padding: 5px;
   flex-direction: row;
   justify-content: flex-start;
-}
-.project-header {
-  width: 80%;
-  height: auto;
+  &:hover {
+    .delete-project-div {
+      display: block;
+    }
+  }
 }
