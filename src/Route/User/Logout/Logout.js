@@ -5,15 +5,9 @@ import "./Logout.scss";
 
 export default class LogOut extends React.Component {
   render() {
-    const { history } = this.props;
     return (
       <div>
-        <Mutation
-          mutation={Logout}
-          onCompleted={data => {
-            history.go();
-          }}
-        >
+        <Mutation mutation={Logout} onCompleted={data => {}}>
           {(UserLogout, { data, loading, error, called, client }) => (
             <form
               onSubmit={e => {
