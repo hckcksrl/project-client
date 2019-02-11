@@ -1,16 +1,27 @@
 import React from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
-import Regist from "../../Route/User/Register";
-import Login from "../../Route/User/Login";
+import LoginForm from "../LoginForm";
+import Home from "../../Route/Home";
+import RegistForm from "../RegistForm";
+import PropTypes from "prop-types";
 
-const LogoutSection = () => {
+const LogoutSection = ({ isLoggedIn }) => {
   return (
     <Switch>
-      <Route exact={true} path={"/"} component={Login} />
-      <Route path={"/regist"} component={Regist} />
+      <Route
+        exact={true}
+        path={"/"}
+        render={props => <Home isLoggedIn={isLoggedIn} {...props} />}
+      />
+      <Route path={"/regist"} component={RegistForm} />
+      <Route path={"/login"} component={LoginForm} />
       <Redirect to={"/"} />
     </Switch>
   );
+};
+
+LogoutSection.propTypes = {
+  isLoggedIn: PropTypes.bool.isRequired
 };
 
 export default LogoutSection;
