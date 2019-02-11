@@ -1,4 +1,7 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
+import LogOut from "../../Route/User/Logout";
+import { Link } from "react-router-dom";
 import "./Header.scss";
 
 class Header extends Component {
@@ -15,33 +18,39 @@ class Header extends Component {
   // };
 
   render() {
+    const { isLoggedIn } = this.props;
     return (
       <div className="Header">
         <div className="Header-height">
           <div className="Header-center">
             <div className="Header-wrap">
-              <span className="Name">PM</span>
+              <span className="Name">
+                <Link to="/">PM</Link>
+              </span>
             </div>
             <div className="border" />
-            <div className="login-logout">
-              <div
-                className="login-signup"
-                // onClick={e => this.loginClick(e)}
-              >
-                Log in
+            {/* <LogOut /> */}
+            {isLoggedIn ? (
+              <LogOut />
+            ) : (
+              <div className="login-logout">
+                <div className="login-signup">
+                  <Link to={"/login"}> Log in</Link>
+                </div>
+                <div className="login-signup">
+                  <Link to={"/regist"}>Sign Up</Link>
+                </div>
               </div>
-              <div
-                className="login-signup"
-                // onClick={e => this.signClick(e)}
-              >
-                Sign Up
-              </div>
-            </div>
+            )}
           </div>
         </div>
       </div>
     );
   }
 }
+
+Header.propTypes = {
+  isLoggedIn: PropTypes.bool.isRequired
+};
 
 export default Header;
