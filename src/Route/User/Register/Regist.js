@@ -1,104 +1,80 @@
-import React from "react";
-import styled from "styled-components";
+import React, { Component } from "react";
 import { EmailRegist } from "./queries";
 import { Mutation } from "react-apollo";
 import { Logined } from "../../../LocalQueries";
+import PropTypes from "prop-types";
+import "../Login/Login.scss";
 
-const Input = styled.input`
-  padding: 1em;
-  margin: 1em;
-  color:  "black"
-  background: papayawhip;
-  border: none;
-  border-radius: 3px;
-`;
+class Regist extends Component {
+  submit = (e, Email_Regist) => {
+    const email = this.email.value;
+    const password = this.password.value;
+    e.preventDefault();
+    Email_Regist({
+      variables: {
+        email: email,
+        password: password
+      }
+    });
+  };
 
-const Password = styled.input`
-  padding: 1em;
-  margin: 1em;
-  color: "black";
-  background: papayawhip;
-  border: none;
-  border-radius: 3px;
-`;
-const Button = styled.button`
-  font-size: 18px;
-  line-height: 30px;
-  font-weight: 600;
-`;
-
-const Form = styled.form``;
-
-export default class Regist extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      email: "",
-      password: ""
-    };
-  }
   render() {
-    const { history } = this.props;
-    const { email, password } = this.state;
+    const { props } = this.props;
     return (
       <Mutation mutation={Logined}>
         {UserLogin => (
           <Mutation
             mutation={EmailRegist}
-            variables={{ email: email, password: password }}
             onCompleted={data => {
-              console.log(data);
               const { Regist } = data;
               if (Regist.result) {
                 localStorage.setItem("token", Regist.token);
-                UserLogin({ variables: { token: Regist.token } });
-                history.push("/");
+                UserLogin({
+                  variables: {
+                    token: Regist.token
+                  }
+                });
+                props.history.go();
               } else {
-                console.log(Regist.error);
+                return Regist.error;
               }
             }}
           >
             {Email_Regist => (
-              <Form
-                onSubmit={e => {
-                  e.preventDefault();
-                  Email_Regist({
-                    variables: {
-                      email: email,
-                      password: password
-                    }
-                  });
-                }}
-              >
-                <Input
-                  placeholder="email"
-                  type="email"
-                  onChange={this._onInputChange}
-                  value={email}
-                  name={"email"}
-                />
-                <Password
-                  placeholder="password"
-                  type="password"
-                  onChange={this._onInputChange}
-                  value={password}
-                  name={"password"}
-                  minLength={5}
-                />
-                <Button type="submit">Regist</Button>
-              </Form>
+              <form onSubmit={e => this.submit(e, Email_Regist)}>
+                <div className="login-input">
+                  <input
+                    ref={node => (this.email = node)}
+                    id="email"
+                    type="email"
+                    placeholder="email"
+                    autoComplete="off"
+                  />
+                </div>
+                <div className="login-input">
+                  <input
+                    ref={node => (this.password = node)}
+                    id="password"
+                    type="password"
+                    placeholder="password"
+                    name="password"
+                    autoComplete="off"
+                    required={true}
+                  />
+                </div>
+                <div className="login-button-wrap">
+                  <button type="submit">Regist</button>
+                </div>
+              </form>
             )}
           </Mutation>
         )}
       </Mutation>
     );
   }
-  _onInputChange = event => {
-    const {
-      target: { value, name }
-    } = event;
-    this.setState({
-      [name]: value
-    });
-  };
 }
+Regist.propTypes = {
+  props: PropTypes.object.isRequired
+};
+
+export default Regist;
