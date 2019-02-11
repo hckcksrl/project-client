@@ -1,12 +1,14 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, { Component } from "react";
 import { EmailLogin } from "./queries";
 import { Mutation } from "react-apollo";
 import { Logined } from "../../../LocalQueries";
+import PropTypes from "prop-types";
+import "./Login.scss";
 
-class Login extends React.Component {
+class Login extends Component {
   submit = (e, Email_Login) => {
-    const { email, password } = this.props;
+    const email = this.email.value;
+    const password = this.password.value;
     e.preventDefault();
     Email_Login({
       variables: {
@@ -17,7 +19,7 @@ class Login extends React.Component {
   };
 
   render() {
-    const { history } = this.props;
+    const { props } = this.props;
     return (
       <Mutation mutation={Logined}>
         {UserLogin => (
@@ -32,21 +34,36 @@ class Login extends React.Component {
                     token: Login.token
                   }
                 });
-                history.go();
+                props.history.go();
               } else {
                 return Login.error;
               }
             }}
           >
             {Email_Login => (
-              <button
-                type="submit"
-                onSubmit={e => {
-                  this.submit(e, Email_Login);
-                }}
-              >
-                Login
-              </button>
+              <form onSubmit={e => this.submit(e, Email_Login)}>
+                <div className="login-input">
+                  <input
+                    ref={node => (this.email = node)}
+                    type="email"
+                    autoComplete="off"
+                    placeholder="email"
+                  />
+                </div>
+                <div className="login-input">
+                  <input
+                    ref={node => (this.password = node)}
+                    type="password"
+                    placeholder="password"
+                    name="password"
+                    autoComplete="off"
+                    required={true}
+                  />
+                </div>
+                <div className="login-button-wrap">
+                  <button type="submit">Login</button>
+                </div>
+              </form>
             )}
           </Mutation>
         )}
@@ -56,8 +73,6 @@ class Login extends React.Component {
 }
 
 Login.propTypes = {
-  email: PropTypes.string.isRequired,
-  password: PropTypes.string.isRequired
+  props: PropTypes.object.isRequired
 };
-
 export default Login;
