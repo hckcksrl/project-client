@@ -63,3 +63,9 @@
     background: rgba(55, 53, 47, 0.08);
   }
 }
+
+a:-webkit-any-link {
+  color: black;
+  cursor: pointer;
+  text-decoration: none;
+}
